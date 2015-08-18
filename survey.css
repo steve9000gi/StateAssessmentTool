@@ -1,0 +1,17 @@
+body {
+  background-color: rgb(248, 248, 248);
+}
+
+header, section, footer, aside, nav, article, figure, audio, video, canvas {
+  display:block;
+}
+
+textarea {
+  width: 40em;
+  height: 5em;
+}
+
+.indented {
+  margin-left: 1em;
+}
+
