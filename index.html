@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+  <!DOCTYPE html>
+  <html>
 <head>
   <meta charset="utf-8" />
   <title>MCH Survey</title>
@@ -7,23 +7,19 @@
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  <!--
-  <style type="text/css">
-    header, section, footer, aside, nav, article, figure, audio, video, canvas
-    { display:block; }
-  </style>
-  -->
   <link rel="stylesheet" Type="text/css" href="survey.css">
 </head>
 
 <body>
   <script type="text/javascript" src="survey.js"> </script>
+    <img src="NMCHWDC-gray.png" alt="NMCHWDC logo">
+    <br/><br/>
   <header>
-    <h1>State Title V Roles in Health Reforms including the Affordable Care Act:</h1>
-    <h2>A Title V State Access to Care Assessment Tool</h2>
+    <h1>State Title V Roles in Health Reforms including the Affordable Care Act:
+    <br/>A Title V State Access to Care Assessment Tool</h1>
   </header>
 
-  <nav name="top">
+  <nav id="top">
     <a href="#main">Overview</a><br/>
     <a href="#section1">Section 1: Eligibility and Enrollment</a><br/>
     <a href="#section2">Section 2: Coverage and Insurance Benefits</a><br/>
@@ -32,10 +28,9 @@
     <a href="#section5">Section 5: Partnerships</a>
   </nav>
 
-  <main>
-  <a name="main"></a>
-    <h1>Overview</h1>
-    <h2>Purpose of the State Assessment Tool</h2>
+  <main id="main">
+    <h2>OVERVIEW</h2>
+    <h3>Purpose of the State Assessment Tool</h3>
 
     <p>The Affordable Care Act (ACA) and other health reforms in states
     transform the health system landscape by expanding insurance coverage,
@@ -70,7 +65,7 @@
       <li>Partnerships between Title V, Medicaid, CHIP, Marketplaces and other key stakeholders.</li>
     </ul>
 
-    <h2>How to complete the tool</h2>
+    <h3>How to complete the tool</h3>
 
     <p>Each section of the tool asks two types of questions:</p>
 
@@ -102,7 +97,7 @@
     Feel free to consult resources or additional colleagues to answer some
     questions.</p>
 
-    <h2>Ways to use the tool</h2>
+    <h3>Ways to use the tool</h3>
 
     <p>Your answers to the tool provide a snapshot of your Title V program’s
     capacity to address and influence key areas affecting MCH and CYSHCN
@@ -136,7 +131,7 @@
     areas for staff development, partnership enhancement, and family outreach.
     We hope you will find it useful.</p>
 
-    <h2>About the National MCH Workforce Development Center</h2>
+    <h3>About the National MCH Workforce Development Center</h3>
 
     <p>The National MCH Workforce Development Center at UNC Chapel Hill, in
     cooperation with the Maternal and Child Health Bureau and in partnership
@@ -164,11 +159,11 @@
       <li>Furthering <strong>population health management, including effective change management and other leadership</strong> skills to ensure health improvement for MCH populations.</li>
     </ul>
 
-    <p><em>The National MCH Workforce Development Center is funded by a
-    cooperative agreement (#UE7MC26282) with the Health Resources & Services
-    Administration Maternal & Child Health Bureau.</em></p>
+    <p class="ctr"><em>The National MCH Workforce Development Center is funded
+      by a cooperative agreement (#UE7MC26282) with the Health Resources &
+      Services Administration Maternal & Child Health Bureau.</em></p>
 
-    <h2>About the Access to Care Core</h2>
+    <h3>About the Access to Care Core</h3>
 
     <p>The central role of the National MCH Workforce Development Center’s
     Access to Care Core is to provide technical assistance for MCH leaders to
@@ -185,25 +180,57 @@
     additional information and questions about this tool, please contact Kathy
     Witgert at kwitgert@nashp.org.</p>
 
+    <a href="#">Back to top</a><br/>
+
   </main>
 
-  <section>
-    <h1>Metadata</h1>
-    <label>
-      State
-      <input type="text" name="state" />
-    </label>
+  <p style="page-break-after:always;"></p>
+
+  <section id="metadata">
+    <img src="NMCHWDC-gray.png" alt="NMCHWDC logo">
+    <br/><br/>
+
+    <h2>State Title V Roles in Health Reforms including the Affordable Care Act
+      <br/>TITLE V STATE ACCESS TO CARE ASSESSMENT TOOL</h2>
+
+    <label class="rightAlign"><b>Date:</b></label>
+    <input type="text" class="leftAlign" name="date" />
     <br/>
 
-    <label>
-      Agency
-      <input type="text" name="agency" />
-    </label>
+    <label class="rightAlign"><b>State:</b></label>
+    <input type="text" class="leftAlign" name="state" />
+    <br/>
+
+    <label class="rightAlign"><b>Agency:</b></label>
+    <input type="text" class="leftAlign" name="agency" />
+    <br/><br/>
+
+    <p><b>Name(s) of Individuals and Affiliations Completing This Tool:</b></p>
+
+    <input type="text" class="txt" name="name1"/>
+    <input type="text" class="txt" name="affiliation1"/>
+    <br/>
+
+    <input type="text" class="txt" name="name2"/>
+    <input type="text" class="txt" name="affiliation2"/>
+    <br/>
+
+    <input type="text" class="txt" name="name3"/>
+    <input type="text" class="txt" name="affiliation3"/>
+    <br/>
+
+    <input type="text" class="txt" name="name4"/>
+    <input type="text" class="txt" name="affiliation4"/>
+    <br/>
+
+    <input type="text" class="txt" name="name5"/>
+    <input type="text" class="txt" name="affiliation5"/>
+    <br/>
+
   </section>
 
-  <section>
-    <a name="section1">
-      <h1><u>1. Eligibility and Enrollment</u></h1>
+  <section id="section1">
+      <h2><u>1. Eligibility and Enrollment</u></h2>
 
     <p>While adults, including women of reproductive age and parents, are a
     major focus of the ACA, other Title V populations will also be affected by
@@ -215,7 +242,7 @@
     influence key eligibility and enrollment aspects of health reform in their
     state and implications for MCH/CYSHCN populations and services.</p>
 
-    <h3>Medicaid Expansion and Enrollment</h3>
+    <h4>Medicaid Expansion and Enrollment</h4>
 
     <p>1) What is the status of the Affordable Care Act’s (ACA) Medicaid
     expansion provision in your state?</p>
@@ -345,7 +372,7 @@
     </label>
     <br/>
 
-    <h3>Consumer Assistance</h3>
+    <h4>Consumer Assistance</h4>
 
     <p>5) Are any Title V local health departments or partners in your state
     recognized as Navigators, Certified Application Counselors, or In-Person
@@ -409,7 +436,7 @@
     </label>
     <br/>
 
-    <h3>State Title V Capacity to Address Eligibility and Enrollment</h3>
+    <h4>State Title V Capacity to Address Eligibility and Enrollment</h4>
 
     <p>For the following questions, please use the scales, below, to consider
     and then rate the capacity and level of activity of your Title V MCH and
@@ -419,15 +446,15 @@
     transformation activities. Use the notes section to describe any limits on
     capacity, barriers to engagement, or follow-up questions.</p>
 
-    <h4>Capacity</h4> 
-    <p>1 – Not applicable<br/>
+    <p><b>Capacity</b><br/> 
+    1 – Not applicable<br/>
     2 – No capacity <br/>
     3 – Low capacity<br/>
     4 – Moderate capacity<br/>
     5 – Strong capacity <br/></p>
 
-    <h4>Level of Activity</h4>
-    <p>1 – Not applicable <br/>
+    <p><b>Level of Activity</b><br/>
+    1 – Not applicable <br/>
     2 – No activity<br/>
     3 – Low activity<br/>
     4 – Moderate activity<br/>
@@ -725,31 +752,31 @@
       <input type="radio" name="s1.q11" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s1.q11" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s1.q11" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s1.q11" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s1.q11" value="5" />
       Not Title V's role
     </label>
-    </p>
+    <br/>
 
     <label>
       Notes:<br/>
@@ -757,34 +784,28 @@
     </label>
     <br/>
 
-    <h3>Resources</h3>
+    <h4>Resources</h4>
     
-    <ul type="disc">
+    <ul>
 
       <li><a href="https://www.statereforum.org/Medicaid-Expansion-Decisions-Map">State Medicaid expansion decisions</a>
 	(State Refor(u)m)
       </li>
 
       <li>
-	<a href="http://www.amchp.org/Policy-Advocacy/health-reform/resources/ Documents/MCHCoverageandBenefitsFINAL.pdf">
+	<a href="http://www.amchp.org/Policy-Advocacy/health-reform/resources/Documents/MCHCoverageandBenefitsFINAL.pdf">
 	  Overview of coverage options for MCH populations</a>
 	(AMCHP)
       </li>
 
       <li>
-	<a href="http://kff.org/health-reform/state-indicator/adoption-of-strategies-to-streamline-enrollment-of-eligible-individuals-as-of-november-15-2013/">
-	  State decisions on time-limited enrollment strategies</a>
+	<a href="http://kff.org/report-section/modern-era-medicaid-enrollment-and-renewal-processes/">
+	  State Enrollment and Renewal Processes for Medicaid and CHIP</a>
 	(Kaiser)
-
-      <li>
-	<a href="http://kff.org/state-category/medicaid-chip/">
-	State decisions on Medicaid and CHIP renewal practices</a>
-	(Kaiser)
-      </li>
 
     </ul>
 
-    <h3>Follow-Up, Action Steps, To-Dos</h3>
+    <h4>Follow-Up, Action Steps, To-Dos</h4>
 
     <p><i>Review your answers and your notes from this section and note
       necessary follow-up steps, resources or individuals to consult, or other
@@ -802,13 +823,12 @@
     </label>
     <br/>
 
-    <a href="#top">Back to top</a><br/>
+    <a href="#">Back to top</a><br/>
 
   </section>
 
-  <section>
-    <a name="section2">
-      <h1><u>2. Coverage and Insurance Benefits</u></h1>
+  <section id="section2">
+      <h2><u>2. Coverage and Insurance Benefits</u></h2>
 
     <p>The ACA expands public and private insurance coverage to populations that
     previously lacked affordable options. Additionally, the ACA defines a
@@ -822,7 +842,7 @@
     capacity to influence health care benefit design in their states and the
     implications for MCH/CYSHCN populations and services.</p>
 
-    <h3>Essential Health Benefits</h3>
+    <h4>Essential Health Benefits</h4>
 
     <p>1) What is your state’s Essential Health Benefits (EHB) benchmark plan?
     </p>
@@ -887,6 +907,8 @@
 
     <label>
       <input type="radio" name="s2.q2a" value="4" />
+      Unsure
+    </label>
 
     <p class="indented">b. Pediatric dental?</p>
 
@@ -985,10 +1007,11 @@
     <br/>
 
     <label class="indented">
-      <input type="radio" name="s2.q4" value="5" />
+      <input type="radio" name="s2.q4" value="6" />
       Other: 
-      <input type="text" name="s2.q4.other"/>
     </label>
+
+    <input type="text" name="s2.q4.other"/>
     <br/>
 
     <label>
@@ -1027,8 +1050,9 @@
     <label class="indented">
       <input type="radio" name="s2.q5" value="5" />
       Other state definition:
-      <input type="text" name="s2.q5.other"/>
     </label>
+    
+    <input type="text" name="s2.q5.other"/>
     <br/>
 
     <label>
@@ -1037,7 +1061,7 @@
     </label>
     <br/>
 
-    <h3>Benefits for Specific Populations</h3>
+    <h4>Benefits for Specific Populations</h4>
 
     <p>6) If your state is expanding Medicaid for adults, what benefit package
     is it offering this newly eligible group?</p>
@@ -1073,7 +1097,7 @@
     <br/>
 
     <p>7) Does your state have a waiver or state plan amendment (SPA) to expand
-    eligibility for Medicaid family planning services?</p
+    eligibility for Medicaid family planning services?</p>
 
     <label>
       <input type="radio" name="s2.q7" value="1" />
@@ -1099,19 +1123,19 @@
     </label>
     <br/>
 
-    <h3>State Title V Capacity to Address Coverage and Insurance Benefits</h3>
+    <h4>State Title V Capacity to Address Coverage and Insurance Benefits</h4>
 
     <p><i>For the following questions, please use the scales, below, to consider and then rate the capacity and level of activity of your Title V MCH and CYSHCN programs to address coverage and insurance benefits issues for MCH and CYSHCN populations. After each question, there is space to note partnerships that help extend Title V capacity to engage in health transformation activities. Use the notes section to describe any limits on capacity, barriers to engagement, or follow-up questions.</i></p>
 
-    <h4>Capacity</h4> 
-    <p>1 – Not applicable<br/>
+    <p><b>Capacity</b><br/> 
+    1 – Not applicable<br/>
     2 – No capacity <br/>
     3 – Low capacity<br/>
     4 – Moderate capacity<br/>
     5 – Strong capacity <br/></p>
 
-    <h4>Level of Activity</h4>
-    <p>1 – Not applicable <br/>
+    <p><b>Level of Activity</b><br/>
+    1 – Not applicable <br/>
     2 – No activity<br/>
     3 – Low activity<br/>
     4 – Moderate activity<br/>
@@ -1414,31 +1438,31 @@
       <input type="radio" name="s2.q12" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s2.q12" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s2.q12" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s2.q12" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s2.q12" value="5" />
       Not Title V's role
     </label>
-    </p>
+    <br/>
 
     <label>
       Notes:<br/>
@@ -1446,13 +1470,11 @@
     </label>
     <br/>
 
-    <h3>Resources</h3>
+    <h4>Resources</h4>
     
-    <ul type="disc">
+    <ul>
 
-      <li>
-	<a href="https://www.statereforum.org/analyses/state-progress-on-essential-health-benefits">
-	  State Benchmark plan selections</a>
+      <li><a href="https://www.statereforum.org/analyses/state-progress-on-essential-health-benefits">State Benchmark plan selections</a>
 	(State Refor(u)m)
       </li>
 
@@ -1487,7 +1509,7 @@
 
     </ul>
 
-    <h3>Follow-Up, Action Steps, To-Dos</h3>
+    <h4>Follow-Up, Action Steps, To-Dos</h4>
 
     <p><i>Review your answers and your notes from this section and note
       necessary follow-up steps, resources or individuals to consult, or other
@@ -1505,13 +1527,12 @@
     </label>
     <br/>
 
-    <a href="#top">Back to top</a><br/>
+    <a href="#">Back to top</a><br/>
 
   </section>
 
-  <section>
-   <a name="section3">
-     <h1><u>3. Provider Networks and Network Adequacy</u></h1>
+  <section id="section3">
+     <h2><u>3. Provider Networks and Network Adequacy</u></h2>
 
      <p>The ACA sets network adequacy standards for qualified health plans (QHP)
      sold in marketplaces in order to provide reasonable access to primary care
@@ -1644,19 +1665,19 @@
     </label>
     <br/>
 
-    <h3>State Title V Capacity to Address Network Adequacy</h3>
+    <h4>State Title V Capacity to Address Network Adequacy</h4>
 
     <p>For the following questions, please use the scales, below, to consider and then rate the capacity and level of activity of your Title V MCH and CYSHCN programs to address network adequacy implications for MCH and CYSHCN populations. After each question, there is space to note partnerships that help extend Title V capacity to engage in health transformation activities. Use the notes section to describe any limits on capacity, barriers to engagement, or follow-up questions.</p>
 
-    <h4>Capacity</h4> 
-    <p>1 – Not applicable<br/>
+    <p><b>Capacity</b><br/> 
+    1 – Not applicable<br/>
     2 – No capacity <br/>
     3 – Low capacity<br/>
     4 – Moderate capacity<br/>
     5 – Strong capacity <br/></p>
 
-    <h4>Level of Activity</h4>
-    <p>1 – Not applicable <br/>
+    <p><b>Level of Activity</b><br/>
+    1 – Not applicable <br/>
     2 – No activity<br/>
     3 – Low activity<br/>
     4 – Moderate activity<br/>
@@ -2033,31 +2054,31 @@
       <input type="radio" name="s3.q10" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s3.q10" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s3.q10" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s3.q10" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s3.q10" value="5" />
       Not Title V's role
     </label>
-    </p>
+    <br/>
 
     <label>
       Notes:<br/>
@@ -2065,13 +2086,11 @@
     </label>
     <br/>
 
-    <h3>Resources</h3>
+    <h4>Resources</h4>
     
-    <ul type="disc">
+    <ul>
 
-      <li>
-	<a href="http://www.rwjf.org/content/dam/farm/reports/issue_briefs/2013/rwjf407486">
-	  Overview of ACA Network Adequacy Standards</a>
+      <li><a href="http://www.rwjf.org/content/dam/farm/reports/issue_briefs/2013/rwjf407486">Overview of ACA Network Adequacy Standards</a>
 	(State Health Reform Assistance Network)
       </li>
 
@@ -2094,7 +2113,7 @@
 
     </ul>
 
-    <h3>Follow-Up, Action Steps, To-Dos</h3>
+    <h4>Follow-Up, Action Steps, To-Dos</h4>
 
     <p><i>Review your answers and your notes from this section and note
       necessary follow-up steps, resources or individuals to consult, or other
@@ -2112,13 +2131,12 @@
     </label>
     <br/>
 
-    <a href="#top">Back to top</a><br/>
+    <a href="#">Back to top</a><br/>
 
   </section>
 
-  <section>
-   <a name="section4">
-     <h1><u>4. Continuity of Care</u></h1>
+  <section id="section4">
+     <h2><u>4. Continuity of Care</u></h2>
 
      <p>As individuals’ life circumstances, including income and family
      composition, change over time, their eligibility for various health
@@ -2135,7 +2153,7 @@
      influence strategies to promote continuity of care for MCH/CYSHCN
      populations and services.</p>
 
-     <h3>Renewal Strategies</h3>
+     <h4>Renewal Strategies</h4>
 
      <p>1) Has your state adopted any of the strategies below to facilitate
      continuity of Medicaid and CHIP coverage?</p>
@@ -2162,8 +2180,9 @@
     <label class="indented">
       <input type="radio" name="s4.q1" value="4" />
       Other: 
-      <input type="text" name="s4.q1.other"/>
     </label>
+
+    <input type="text" name="s4.q1.other"/>
     <br/>
 
     <label>
@@ -2232,7 +2251,7 @@
     </label>
     <br/>
 
-    <h3>Coordination Across Programs</h3>
+    <h4>Coordination Across Programs</h4>
 
     <p>4) Is your state planning for or considering a Basic Health Program as a
     way to bridge Medicaid and the marketplace for low-income families?</p>
@@ -2328,7 +2347,7 @@
     </label>
     <br/>
 
-    <h3>State Title V Capacity to Address Continuity of Care</h3>
+    <h4>State Title V Capacity to Address Continuity of Care</h4>
 
     <p>For the following questions, please use the scales, below, to consider
     and then rate the capacity and level of activity of your Title V MCH and
@@ -2338,15 +2357,15 @@
     Use the notes section to describe any limits on capacity, barriers to
     engagement, or follow-up questions.</p> 
 
-    <h4>Capacity</h4> 
-    <p>1 – Not applicable<br/>
+    <p><b>Capacity</b><br/> 
+    1 – Not applicable<br/>
     2 – No capacity <br/>
     3 – Low capacity<br/>
     4 – Moderate capacity<br/>
     5 – Strong capacity <br/></p>
 
-    <h4>Level of Activity</h4>
-    <p>1 – Not applicable <br/>
+    <p><b>Level of Activity</b><br/>
+    1 – Not applicable <br/>
     2 – No activity<br/>
     3 – Low activity<br/>
     4 – Moderate activity<br/>
@@ -2716,31 +2735,31 @@
       <input type="radio" name="s4.q12" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s4.q12" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s4.q12" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s4.q12" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s4.q12" value="5" />
       Not Title V's role
     </label>
-    </p>
+    <br/>
 
     <label>
       Notes:<br/>
@@ -2748,13 +2767,11 @@
     </label>
     <br/>
 
-    <h3>Resources</h3>
+    <h4>Resources</h4>
     
-    <ul type="disc">
+    <ul>
 
-      <li>
-	<a href="https://www.statereforum.org/weekly-insight/coverage-for-pregnant-women-aca">
-	  Overview of coverage transitions for pregnant women</a>
+      <li><a href="https://www.statereforum.org/weekly-insight/coverage-for-pregnant-women-aca">Overview of coverage transitions for pregnant women</a>
 	(State Refor(u)m)
       </li>
 
@@ -2777,7 +2794,7 @@
 
     </ul>
 
-    <h3>Follow-Up, Action Steps, To-Dos</h3>
+    <h4>Follow-Up, Action Steps, To-Dos</h4>
 
     <p><i>Review your answers and your notes from this section and note
       necessary follow-up steps, resources or individuals to consult, or other
@@ -2795,13 +2812,12 @@
     </label>
     <br/>
 
-    <a href="#top">Back to top</a><br/>
+    <a href="#">Back to top</a><br/>
 
   </section>
 
-  <section>
-    <a name="section5">
-      <h1><u>5. Partnerships between Title V, Medicaid, CHIP, and Other Key Stakeholders</u></h1>
+  <section id="section5">
+      <h2><u>5. Partnerships between Title V, Medicaid, CHIP, and Other Key Stakeholders</u></h2>
 
     <p>Public health entities—such as state and local government agencies
     and non-profit and community-based organizations—can be important and
@@ -2835,47 +2851,47 @@
 	<input type="radio" name="s5.q1a" value=1>
 	Yes (Select all that apply):
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.1"
-	disabled=true value="Medicaid Director" />
+	disabled="disabled" value="Medicaid Director" />
 	Medicaid Director
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.2"
-	disabled=true value="Medicaid EPSDT staff" />
+	disabled="disabled" value="Medicaid EPSDT staff" />
 	Medicaid EPSDT staff
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.3"
-	disabled=true value="Medicaid eligibility staff" />
+	disabled="disabled" value="Medicaid eligibility staff" />
 	Medicaid eligibility staff
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.4"
-	disabled=true value="Medicaid managed care staff" />
+	disabled="disabled" value="Medicaid managed care staff" />
 	Medicaid managed care staff
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1a" value=2 />
 	No
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1a" value=3 />
 	Unsure
       </label>
-      </br>
+      <br/>
 
       <label>
 	Describe working relationship with Medicaid: (For example, which of
@@ -2898,33 +2914,33 @@
 	<input type="radio" name="s5.q1b" value=1>
 	Yes (Select all that apply):
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1b-chkbox" name="s5.q1b.1"
-	disabled=true value="CHIP Director" />
+	disabled="disabled" value="CHIP Director" />
 	CHIP Director
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1b-chkbox" name="s5.q1b.2"
-	disabled=true value="CHIP staff" />
+	disabled="disabled" value="CHIP staff" />
 	CHIP staff
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1b" value=2 />
 	No
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1b" value=3 />
 	Unsure
       </label>
-      </br>
+      <br/>
 
       <label>
 	Describe working relationship with CHIP:
@@ -2943,33 +2959,33 @@
 	<input type="radio" name="s5.q1c" value=1>
 	Yes (Select all that apply):
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1c-chkbox" name="s5.q1c.1"
-	disabled=true value="Marketplace Director" />
+	disabled="disabled" value="Marketplace Director" />
 	Marketplace Director
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1c-chkbox" name="s5.q1c.2"
-	disabled=true value="Marketplace outreach and enrollment contact" />
+	disabled="disabled" value="Marketplace outreach and enrollment contact" />
 	Marketplace outreach and enrollment contact
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1c" value=2 />
 	No
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1c" value=3 />
 	Unsure
       </label>
-      </br>
+      <br/>
 
       <label>
 	Describe working relationship with the Marketplace::
@@ -2989,33 +3005,33 @@
 	<input type="radio" name="s5.q1d" value=1>
 	Yes (Select all that apply):
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1d-chkbox" name="s5.q1d.1"
-	disabled=true value="Health insurance commissioner" />
+	disabled="disabled" value="Health insurance commissioner" />
 	Health insurance commissioner
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="checkbox" class="indented s5q1d-chkbox" name="s5.q1d.2"
-	disabled=true value="Ombudsman" />
+	disabled="disabled" value="Ombudsman" />
 	Ombudsman
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1d" value=2 />
 	No
       </label>
-      </br>
+      <br/>
 
       <label>
 	<input type="radio" name="s5.q1d" value=3 />
 	Unsure
       </label>
-      </br>
+      <br/>
 
       <label>
 	Describe working relationship with the insurance division:
@@ -3084,8 +3100,8 @@
     </label>
     <br/>
 
-    <h3>State Title V Capacity to Form Partnerships with Medicaid, CHIP, and
-      the Marketplace</h3> 
+    <h4>State Title V Capacity to Form Partnerships with Medicaid, CHIP, and
+      the Marketplace</h4> 
     <p><i>For the following questions, please use the scales, below, to
       consider and then rate the capacity and level of activity of your Title V
       MCH and CYSHCN programs to assess partnerships with Medicaid, CHIP, and
@@ -3095,15 +3111,15 @@
       describe any limits on capacity, barriers to engagement, or follow-up
       questions.  </i></p>
 
-    <h4>Capacity</h4> 
-    <p>1 – Not applicable<br/>
+    <p><b>Capacity</b><br/> 
+    1 – Not applicable<br/>
     2 – No capacity <br/>
     3 – Low capacity<br/>
     4 – Moderate capacity<br/>
     5 – Strong capacity <br/></p>
 
-    <h4>Level of Activity</h4>
-    <p>1 – Not applicable <br/>
+    <p><b>Level of Activity</b><br/>
+    1 – Not applicable <br/>
     2 – No activity<br/>
     3 – Low activity<br/>
     4 – Moderate activity<br/>
@@ -3401,31 +3417,31 @@
       <input type="radio" name="s5.q8" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q8" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q8" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q8" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q8" value="5" />
       Not Title V's role
     </label>
-    </p>
+    <br/>
 
     <label>
       Notes:<br/>
@@ -3440,25 +3456,25 @@
       <input type="radio" name="s5.q9" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q9" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q9" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q9" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q9" value="5" />
@@ -3479,31 +3495,31 @@
       <input type="radio" name="s5.q10" value="1" />
       A leader
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q10" value="2" />
       A participant
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q10" value="3" />
       An observer
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q10" value="4" />
       Not involved
     </label>
-    <br>
+    <br/>
 
     <label>
       <input type="radio" name="s5.q10" value="5" />
       Not Title V's role
     </label>
-    </p>
+    <br/>
 
     <label>
       Notes:<br/>
@@ -3511,19 +3527,17 @@
     </label>
     <br/>
 
-    <h3>Resources</h3>
+    <h4>Resources</h4>
     
-    <ul type="disc">
+    <ul>
 
-      <li>
-	<a href="http://medicaiddirectors.org/about/state-directors">
-	  List of state Medicaid Directors </a>
+      <li><a href="http://medicaiddirectors.org/about/state-directors">List of state Medicaid Directors</a>
 	(NAMD)
       </li>
 
     </ul>
 
-    <h3>Follow-Up, Action Steps, To-Dos</h3>
+    <h4>Follow-Up, Action Steps, To-Dos</h4>
 
     <p><i>Review your answers and your notes from this section and note
       necessary follow-up steps, resources or individuals to consult, or other
@@ -3541,7 +3555,7 @@
     </label>
     <br/>
 
-     <a href="#top">Back to top</a><br/>
+     <a href="#">Back to top</a><br/>
 
   </section>
 

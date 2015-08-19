@@ -1,14 +1,36 @@
 body {
   background-color: rgb(248, 248, 248);
+  font-family: sans-serif;
 }
 
 header, section, footer, aside, nav, article, figure, audio, video, canvas {
   display:block;
 }
 
+h1, h2, .ctr {
+  text-align: center;
+}
+
+.rightAlign {
+  display: inline-block;
+  float: left;
+  clear: left;
+  width: 70px;
+  text-align: left;
+}
+
+.leftAlign {
+  display: inline-block;
+  float: left;
+}
+
 textarea {
   width: 40em;
   height: 5em;
+}
+
+.txt {
+  width: 40em;
 }
 
 .indented {
