@@ -11,7 +11,7 @@ h1, h2, .ctr {
   text-align: center;
 }
 
-.rightAlign {
+.meta-label {
   display: inline-block;
   float: left;
   clear: left;
@@ -22,6 +22,18 @@ h1, h2, .ctr {
 .leftAlign {
   display: inline-block;
   float: left;
+}
+
+#date {
+  width: 220px;
+}
+
+#state-select {
+  width: 225px;
+}
+
+#agency {
+  width: 219px;
 }
 
 textarea {
@@ -37,3 +49,40 @@ textarea {
   margin-left: 1em;
 }
 
+html, body {
+  height: 100%;
+}
+
+#main-page {
+  min-height: 100%;
+  margin-bottom: -25px; /* equal to footer height */
+}
+
+footer {
+  background: #eeeeee;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+#footer-div {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  height: 25px;
+  border-style: groove;
+  vertical-align: middle;
+}
+
+
+span {
+  display: table-cell;
+  text-align: center;
+}
+
+#submit {
+  font-size: 12px;
+  background: #aaffaa;
+  line-height: 14px;
+}

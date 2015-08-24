@@ -38,4 +38,10 @@ $(document).ready(function() {
   $("#s5q1b input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1c input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1d input[type=radio]").on("change", setCheckBoxes);
+
+  $("#submit").on("click", function() {
+    alert("This button is a placeholder. When this survey application is "
+	+ "up and running, this is how you'll save your survey results. At "
+	+ "this point, however, nothing has been saved.");
+  });
 });
