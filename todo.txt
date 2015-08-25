@@ -1,0 +1,23 @@
+Here's what needs doing for the SAT project.
+
+- backend
+  - clone backend project from SSM repo
+  - rename maps -> surveys in schema, routes, and code
+
+- infrastructure
+  - should be able to pretty much just copy the stuff from SSM
+  - will need to open another port
+
+- frontend:
+  - copy frontend code from SSM project:
+    - lightbox stuff
+    - login/logout/register/other authentication stuff
+    - listing maps->surveys
+    - fetching maps->surveys
+    - saving maps->surveys, including URL munging stuff
+  - will need to write my own survey <-> JSON [de]serialization functions
+  - fixed-position footer for submitting
+
+- other stuff:
+  - need to download data as CSV/TSV
+
