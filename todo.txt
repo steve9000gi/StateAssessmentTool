@@ -1,8 +1,6 @@
 Here's what needs doing for the SAT project.
 
 - backend
-  - clone backend project from SSM repo
-  - rename maps -> surveys in schema, routes, and code
 
 - infrastructure
   - should be able to pretty much just copy the stuff from SSM
