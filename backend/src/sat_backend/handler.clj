@@ -85,7 +85,7 @@
 (defn- wrap-cors
   [handler]
   (cors/wrap-cors handler
-                  :access-control-allow-origin [#"http://localhost:8081"]
+                  :access-control-allow-origin [#".*"]
                   :access-control-allow-methods [:get :put :post :delete]
                   :access-control-allow-headers [:content-type :cookie]
                   :access-control-allow-credentials true))

@@ -1,21 +1,23 @@
 Here's what needs doing for the SAT project.
 
 - backend
+  - create an admin script to create new users
+  - API route to download data as CSV/TSV
 
 - infrastructure
   - should be able to pretty much just copy the stuff from SSM
-  - will need to open another port
+  - will need to open another port (asked Chris on 2015-08-24)
 
 - frontend:
-  - copy frontend code from SSM project:
-    - lightbox stuff
-    - login/logout/register/other authentication stuff
-    - listing maps->surveys
-    - fetching maps->surveys
-    - saving maps->surveys, including URL munging stuff
-  - will need to write my own survey <-> JSON [de]serialization functions
-  - fixed-position footer for submitting
-
-- other stuff:
-  - need to download data as CSV/TSV
+  - Home page
+    - lists owned surveys, sorted by most recently modified time
+    - if admin, also lists all other surveys
+    - each contains a link to open the survey
+      - link is guarded by a popup prompt warning against simultaneous editing
+    - also contains a link to download the survey (as TSV)
+    - also a button to create a new survey
+  - Survey page
+    - the survey ID should be present in the URL
+    - fetch the form data from the backend (serialize data -> JSON)
+    - submit the form data to the backend (deserialize data <- JSON)
 

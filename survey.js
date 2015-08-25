@@ -1,6 +1,8 @@
 $(document).ready(function() {
   "use strict";
 
+  var backendBase = 'http://localhost:8081';
+
   ///////////////////////////////////////////////////////////////////////////// 
   // setCheckBoxes: assumes the following DOM context:
   // <div id = "divId">
@@ -44,4 +46,108 @@ $(document).ready(function() {
 	+ "up and running, this is how you'll save your survey results. At "
 	+ "this point, however, nothing has been saved.");
   });
+
+  // Check whether we're authenticated at the backend, and call the callback
+  // with the boolean result (i.e. true = authenticated, false = not).
+  var checkAuthentication = function(callback) {
+    d3.xhr(backendBase + '/testauth')
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .get(function(error, data) {
+        if (error) {
+          callback(false);
+        } else {
+          var message = JSON.parse(data.response).message;
+          if (message === 'authenticated') {
+            callback(true);
+          } else {
+            callback(false);
+          }
+        }
+      })
+  };
+
+  var renderLoginForm = function() {
+    var container = d3.select('#login');
+    var form = container
+      .append('form')
+      .html('<label>' +
+            '  Email address:' +
+            '  <input type="text" name="email" />' +
+            '</label>' +
+            '<br />' +
+            '<label>' +
+            '  Password:' +
+            '  <input type="password" name="password" />' +
+            '</label>' +
+            '<br />' +
+            '<input type="submit" name="Login" />');
+    var message = container
+      .append('p')
+      .attr('class', 'message');
+
+    form.on('submit', function() {
+      d3.event.preventDefault();
+      message.text('Loading...');
+      var requestData = {
+        email   : d3.event.target[0].value,
+        password: d3.event.target[1].value
+      };
+      d3.xhr(backendBase + '/login')
+        .header('Content-Type', 'application/json')
+        .on('beforesend', function(request) { request.withCredentials = true })
+        .post(JSON.stringify(requestData), function(error, data) {
+          if (error) {
+            message.text('Login failed');
+          } else {
+            d3.select('#login').style('visibility', 'hidden');
+            d3.selectAll('#login *').remove();
+            location.href = 'home.html';
+          }
+        });
+    });
+  };
+
+  var setupLoginForm = function() {
+    if (location.pathname !== '/') return;
+    checkAuthentication(function(isAuthenticated) {
+      if (isAuthenticated) {
+        location.href = 'home.html';
+      } else {
+        renderLoginForm();
+      }
+    });
+  };
+
+  var logout = function() {
+    d3.xhr(backendBase + '/logout')
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .get(function(error, data) {
+        if (error) {
+          console.log('Logout error:', error);
+          alert('Error logging out.');
+        } else {
+          location.href = '/';
+        }
+      });
+  };
+
+  var setupLogoutLink = function() {
+    if (location.pathname !== '/home.html') return;
+    d3.select('#logout-link')
+      .on('click', logout);
+  };
+
+  var requireAuthentication = function() {
+    // don't require auth on main page
+    if (location.pathname === '/') return;
+    checkAuthentication(function(isAuthenticated) {
+      if (!isAuthenticated) {
+        location.href = '/';
+      }
+    });
+  };
+
+  setupLoginForm();
+  setupLogoutLink();
+  requireAuthentication();
 });
