@@ -55,34 +55,50 @@ html, body {
 
 #main-page {
   min-height: 100%;
-  margin-bottom: -25px; /* equal to footer height */
+  margin-bottom: -26px; /* equal to -footer height */
 }
 
 footer {
   background: #eeeeee;
   position: fixed;
+  height: 26px;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
 #footer-div {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-  height: 25px;
+  height: 26px;
   border-style: groove;
   vertical-align: middle;
+  text-align: justify;
+  -ms-text-justify: distribute-all-lines;
+  text-justify: distribute-all-lines;
 }
 
+.box {
+  width: 150px;
+  height: 26px;
+  vertical-align: top;
+  display: inline-block;
+  *display: inline;
+  zoom: 1;
+}
 
-span {
-  display: table-cell;
-  text-align: center;
+.stretch {
+  width: 100%;
+  display: inline-block;
+  font-size: 0.01px;
+  line-height: 0;
 }
 
 #submit {
   font-size: 12px;
   background: #aaffaa;
   line-height: 14px;
+}
+
+#btt-box, #back-to-top {
+  font-size: 14px;
+  text-align: left;
 }
