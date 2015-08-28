@@ -6,7 +6,7 @@ Here's what needs doing for the SAT project.
 
 - infrastructure
   - should be able to pretty much just copy the stuff from SSM
-  - will need to open another port (asked Chris on 2015-08-24)
+  - use port 8081, which has been opened on syssci for this purpose
 
 - frontend:
   - Home page

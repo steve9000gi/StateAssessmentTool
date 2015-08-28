@@ -66,8 +66,8 @@ $(document).ready(function() {
       })
   };
 
-  var renderLoginForm = function() {
-    var container = d3.select('#login');
+  var renderLoginForm = function(login_selector) {
+    var container = d3.select(login_selector);
     var form = container
       .append('form')
       .html('<label>' +
@@ -99,21 +99,21 @@ $(document).ready(function() {
           if (error) {
             message.text('Login failed');
           } else {
-            d3.select('#login').style('visibility', 'hidden');
-            d3.selectAll('#login *').remove();
+            d3.select(login_selector).style('visibility', 'hidden');
+            d3.select(login_selector).selectAll().remove();
             location.href = 'home.html';
           }
         });
     });
   };
 
-  var setupLoginForm = function() {
+  var setupLoginForm = function(login_selector) {
     if (location.pathname !== '/') return;
     checkAuthentication(function(isAuthenticated) {
       if (isAuthenticated) {
         location.href = 'home.html';
       } else {
-        renderLoginForm();
+        renderLoginForm(login_selector);
       }
     });
   };
@@ -131,15 +131,13 @@ $(document).ready(function() {
       });
   };
 
-  var setupLogoutLink = function() {
+  var setupLogoutLink = function(logout_link_selector) {
     if (location.pathname !== '/home.html') return;
-    d3.select('#logout-link')
+    d3.select(logout_link_selector)
       .on('click', logout);
   };
 
   var requireAuthentication = function() {
-    // don't require auth on main page
-    if (location.pathname === '/') return;
     checkAuthentication(function(isAuthenticated) {
       if (!isAuthenticated) {
         location.href = '/';
@@ -147,7 +145,13 @@ $(document).ready(function() {
     });
   };
 
-  setupLoginForm();
-  setupLogoutLink();
-  requireAuthentication();
+  window.setupIndexPage = function(login_selector) {
+    setupLoginForm(login_selector);
+  };
+
+  window.setupHomePage = function(logout_link_selector) {
+    requireAuthentication();
+    setupLogoutLink(logout_link_selector);
+  };
+
 });
