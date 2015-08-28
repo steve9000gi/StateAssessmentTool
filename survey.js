@@ -219,12 +219,8 @@ $(document).ready(function() {
       });
   };
 
-  var readSurveyFromDocument = function() {
-    // Note JST 2015-08-27: I do not intend this code to be a paragon of
-    // elegance. The deadline looms, and I need to get it done. We'll see how
-    // bad it ends up being... :-)
-
-    var survey = {};
+  // Warning: modifies its argument.
+  var slurpSurveyMetadata = function(survey) {
     // TODO: check if this works on all browsers, esp. those that don't yet
     // have a built-in date-type input element:
     survey.date = d3.select('input[name=date]').node().value
@@ -239,13 +235,17 @@ $(document).ready(function() {
       survey.affiliations[i-1] =
         document.getElementsByName('affiliation' + i)[0].value;
     }
+  };
 
+  // Read survey data from document, and return a survey object.
+  var slurpSurvey = function() {
+    var survey = {};
+    slurpSurveyMetadata(survey);
     console.log(survey);
     return survey;
   };
 
-  var writeSurveyToDocument = function(survey) {
-    console.log(survey);
+  var applySurveyMetadata = function(survey) {
     d3.select('input[name=date]').node().value = survey.date;
     if (survey.state === '') {
       var stateIdx = 0;
@@ -256,12 +256,17 @@ $(document).ready(function() {
     }
     document.getElementById('state-select').selectedIndex = stateIdx;
     document.getElementById('agency').value = survey.agency;
-
     for (var i=1; i<=5; i++) {
       document.getElementsByName('name' + i)[0].value = survey.names[i-1];
       document.getElementsByName('affiliation' + i)[0].value =
         survey.affiliations[i-1];
     }
+  }
+
+  // Update the document to match the data in the given survey object.
+  var applySurvey = function(survey) {
+    console.log(survey);
+    applySurveyMetadata(survey);
   };
 
   var getSurveyIDFromLocation = function() {
@@ -281,7 +286,7 @@ $(document).ready(function() {
       .on('beforesend', function(request) { request.withCredentials = true })
       .on('error', function() { alert('Error talking to backend server.') })
       .on('load', function(data) {
-        writeSurveyToDocument(data.document);
+        applySurvey(data.document);
       })
       .send('GET');
   }
@@ -300,7 +305,7 @@ $(document).ready(function() {
           .on('load', function(data) {
             console.log('survey ' + id + ' saved');
           })
-          .send('PUT', JSON.stringify(readSurveyFromDocument()));
+          .send('PUT', JSON.stringify(slurpSurvey()));
       });
   };
 
