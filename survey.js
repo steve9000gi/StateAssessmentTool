@@ -237,10 +237,41 @@ $(document).ready(function() {
     }
   };
 
+  var slurpRadio = function(name) {
+    // TODO: try using d3's property method here.
+    var node = d3.select('input[name="' + name + '"]:checked').node();
+    return {
+      radio: node ? node.value : '',
+      notes: d3.select('textarea[name="' + name + '.notes"]').node().value
+    };
+  };
+
+  var slurpChecks = function(name) {
+    var arr = [];
+    d3.selectAll('input[name^="' + name + '.a"]')
+      .each(function(d,i) { arr.push(this.checked) })
+    return {
+      checks: arr,
+      notes: d3.select('textarea[name="' + name + '.notes"]').node().value
+    };
+  };
+
+  var slurpSection1 = function() {
+    var section = {questions: []};
+    section.questions[0] = slurpRadio('s1.q1');
+    section.questions[1] = slurpRadio('s1.q2');
+    section.questions[2] = slurpRadio('s1.q3');
+    section.questions[3] = slurpChecks('s1.q4');
+    return section;
+  };
+
   // Read survey data from document, and return a survey object.
   var slurpSurvey = function() {
     var survey = {};
     slurpSurveyMetadata(survey);
+    survey.sections = [];
+    survey.sections[0] = slurpSection1();
+
     console.log(survey);
     return survey;
   };
@@ -263,10 +294,33 @@ $(document).ready(function() {
     }
   }
 
+  var applyRadio = function(question, name) {
+    if (question.radio) {
+      document.getElementsByName(name)[question.radio-1].checked = true;
+    }
+    document.getElementsByName(name + '.notes')[0].value = question.notes;
+  };
+
+  var applyChecks = function(question, name) {
+    for (var i=1; i <= question.checks.length; i++) {
+      document.getElementsByName(name + '.a' + i)[0].checked =
+        question.checks[i-1];
+    }
+    document.getElementsByName(name + '.notes')[0].value = question.notes;
+  };
+
+  var applySection1 = function(section) {
+    applyRadio(section.questions[0], 's1.q1');
+    applyRadio(section.questions[1], 's1.q2');
+    applyRadio(section.questions[2], 's1.q3');
+    applyChecks(section.questions[3], 's1.q4');
+  };
+
   // Update the document to match the data in the given survey object.
   var applySurvey = function(survey) {
     console.log(survey);
     applySurveyMetadata(survey);
+    applySection1(survey.sections[0]);
   };
 
   var getSurveyIDFromLocation = function() {
