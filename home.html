@@ -21,6 +21,8 @@
 
     <main id="main">
       <a id="logout-link" href="#">Logout</a>
+      <div id="survey-list"></div>
+      <button id="create-survey">Create New Survey</button>
     </main>
   </div>
 
@@ -28,7 +30,7 @@
   <script type="text/javascript" src="survey.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      setupHomePage('#logout-link');
+      setupHomePage('#logout-link', '#survey-list', '#create-survey');
     });
   </script>
 </body>

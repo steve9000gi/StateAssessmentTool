@@ -61,10 +61,8 @@
 
 (defn- list-as-admin-sql
   []
-  [(str "SELECT m.id, owner, u.email AS owner_email, "
-        "       created_at, modified_at,"
-        "       jsonb_array_length(document #> '{nodes}') AS num_nodes,"
-        "       jsonb_array_length(document #> '{links}') AS num_links"
+  [(str "SELECT s.id, s.owner, u.email AS owner_email, "
+        "       created_at, modified_at"
         "  FROM sat.surveys s"
         "  JOIN sat.users u"
         "    ON s.owner = u.id"
@@ -72,9 +70,7 @@
 
 (defn- list-as-user-sql
   [user-id]
-  [(str "SELECT id, owner, created_at, modified_at,"
-        "       jsonb_array_length(document #> '{nodes}') AS num_nodes,"
-        "       jsonb_array_length(document #> '{links}') AS num_links"
+  [(str "SELECT id, owner, created_at, modified_at"
         "  FROM sat.surveys"
         "  WHERE owner = ?"
         "  ORDER BY modified_at DESC")

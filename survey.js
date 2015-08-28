@@ -41,12 +41,6 @@ $(document).ready(function() {
   $("#s5q1c input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1d input[type=radio]").on("change", setCheckBoxes);
 
-  $("#submit").on("click", function() {
-    alert("This button is a placeholder. When this survey application is "
-	+ "up and running, this is how you'll save your survey results. At "
-	+ "this point, however, nothing has been saved.");
-  });
-
   // Check whether we're authenticated at the backend, and call the callback
   // with the boolean result (i.e. true = authenticated, false = not).
   var checkAuthentication = function(callback) {
@@ -66,8 +60,8 @@ $(document).ready(function() {
       })
   };
 
-  var renderLoginForm = function(login_selector) {
-    var container = d3.select(login_selector);
+  var renderLoginForm = function(loginSelector) {
+    var container = d3.select(loginSelector);
     var form = container
       .append('form')
       .html('<label>' +
@@ -96,24 +90,25 @@ $(document).ready(function() {
         .header('Content-Type', 'application/json')
         .on('beforesend', function(request) { request.withCredentials = true })
         .post(JSON.stringify(requestData), function(error, data) {
+          message.text('');
           if (error) {
             message.text('Login failed');
           } else {
-            d3.select(login_selector).style('visibility', 'hidden');
-            d3.select(login_selector).selectAll().remove();
+            d3.select(loginSelector).style('visibility', 'hidden');
+            d3.select(loginSelector).selectAll().remove();
             location.href = 'home.html';
           }
         });
     });
   };
 
-  var setupLoginForm = function(login_selector) {
+  var setupLoginForm = function(loginSelector) {
     if (location.pathname !== '/') return;
     checkAuthentication(function(isAuthenticated) {
       if (isAuthenticated) {
         location.href = 'home.html';
       } else {
-        renderLoginForm(login_selector);
+        renderLoginForm(loginSelector);
       }
     });
   };
@@ -131,12 +126,6 @@ $(document).ready(function() {
       });
   };
 
-  var setupLogoutLink = function(logout_link_selector) {
-    if (location.pathname !== '/home.html') return;
-    d3.select(logout_link_selector)
-      .on('click', logout);
-  };
-
   var requireAuthentication = function() {
     checkAuthentication(function(isAuthenticated) {
       if (!isAuthenticated) {
@@ -145,13 +134,157 @@ $(document).ready(function() {
     });
   };
 
-  window.setupIndexPage = function(login_selector) {
-    setupLoginForm(login_selector);
+  var setupLogoutLink = function(logoutLinkSelector) {
+    if (location.pathname !== '/home.html') return;
+    d3.select(logoutLinkSelector)
+      .on('click', logout);
   };
 
-  window.setupHomePage = function(logout_link_selector) {
+  var renderSurveyList = function(surveyListSelector, data) {
+    // TODO: test this selection pattern:
+    d3.select(surveyListSelector).selectAll().remove();
+    if (!data || data.length === 0) {
+      d3.select(surveyListSelector).append('p')
+        .text("You're logged in, but you don't have any surveys yet. " +
+              "To get started, create a survey using the button below.");
+      return;
+    }
+
+    var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
+    var columns =
+      ['Map ID', 'Created At', 'Modified At'];
+    if (asAdmin) {
+      columns.push('Owner Email');
+    }
+
+    var table = d3.select(surveyListSelector).append('table'),
+        thead = table.append('thead'),
+        tbody = table.append('tbody');
+
+    thead
+      .append('tr')
+      .selectAll('th')
+      .data(columns)
+      .enter()
+      .append('th')
+      .text(String);
+
+    var rows = tbody
+      .selectAll('tr')
+      .data(data)
+      .enter()
+      .append('tr');
+
+    rows.append('td')
+      .append('a')
+      .attr('href', function(d) { return 'survey.html?id=' + d.id})
+      .text(function(d) { return d.id });
+    rows.append('td').text(function(d) { return d.created_at });
+    rows.append('td').text(function(d) { return d.modified_at });
+    if (asAdmin) {
+      rows.append('td').text(function(d) { return d.owner_email });
+    }
+  };
+
+  var setupMapList = function(surveyListSelector) {
+    var message = d3.select(surveyListSelector)
+      .append('div')
+      .attr('class', 'loading-message')
+      .text('Loading...');
+    d3.json(backendBase + '/surveys')
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .on('error', function() { alert('Error talking to backend server.') })
+      .on('load', function(result) {
+        message.text('');
+        renderSurveyList(surveyListSelector, result)
+      })
+      .send('GET');
+  };
+
+  var setupCreateButton = function(createButtonSelector) {
+    d3.select(createButtonSelector)
+      .on('click', function() {
+        d3.json(backendBase + '/survey')
+          .on('beforesend', function(request){ request.withCredentials = true })
+          .on('error', function() { alert('Error talking to backend server.') })
+          .on('load', function(data) {
+            if (data && typeof data === 'object' && data.hasOwnProperty('id')) {
+              location.href = 'survey.html?id=' + data.id;
+            } else {
+              console.log('unexpected data received:', data);
+              alert('Error: unexpected response from the backend server.');
+            }
+          })
+          .send('POST', JSON.stringify({}));
+      });
+  };
+
+  var writeSurveyToDocument = function(survey) {
+    // TODO;
+    console.log('writeSurveyToDocument (stub)', survey);
+  };
+
+  var readSurveyFromDocument = function() {
+    // TODO;
+    console.log('readSurveyFromDocument (stub)');
+    return {};
+  };
+
+  var getSurveyIDFromLocation = function() {
+    var match = location.search.match(/^\?id=(\d+)$/);
+    if (match) {
+      return +match[1];
+    } else {
+      alert('Error: invalid survey ID');
+      return null;
+    }
+  };
+
+  var fetchSurvey = function() {
+    var id = getSurveyIDFromLocation();
+    if (!id) return;
+    d3.json(backendBase + '/survey/' + id)
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .on('error', function() { alert('Error talking to backend server.') })
+      .on('load', function(data) {
+        writeSurveyToDocument(data.document);
+      })
+      .send('GET');
+  }
+
+  var setupSubmitButton = function(submitButtonSelector) {
+    var id = getSurveyIDFromLocation();
+    if (!id) return;
+    d3.select(submitButtonSelector)
+      .on('click', function() {
+        d3.json(backendBase + '/survey/' + id)
+          .on('beforesend', function(request){ request.withCredentials = true })
+          .on('error', function() {
+            console.error('Error talking to backend server.');
+            // alert('Error talking to backend server.')
+          })
+          .on('load', function(data) {
+            console.log('survey ' + id + ' saved');
+          })
+          .send('PUT', JSON.stringify(readSurveyFromDocument()));
+      });
+  };
+
+  window.setupIndexPage = function(loginSelector) {
+    setupLoginForm(loginSelector);
+  };
+
+  window.setupHomePage =
+  function(logoutLinkSelector, surveyListSelector, createButtonSelector) {
     requireAuthentication();
-    setupLogoutLink(logout_link_selector);
+    setupLogoutLink(logoutLinkSelector);
+    setupMapList(surveyListSelector);
+    setupCreateButton(createButtonSelector);
+  };
+
+  window.setupSurveyPage = function(submitSelector) {
+    fetchSurvey();
+    setupSubmitButton(submitSelector);
   };
 
 });

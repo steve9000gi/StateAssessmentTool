@@ -87,7 +87,7 @@
   (cors/wrap-cors handler
                   :access-control-allow-origin [#".*"]
                   :access-control-allow-methods [:get :put :post :delete]
-                  :access-control-allow-headers [:content-type :cookie]
+                  :access-control-allow-headers [:accept :content-type :cookie]
                   :access-control-allow-credentials true))
 
 (defn app
