@@ -219,15 +219,49 @@ $(document).ready(function() {
       });
   };
 
-  var writeSurveyToDocument = function(survey) {
-    // TODO;
-    console.log('writeSurveyToDocument (stub)', survey);
+  var readSurveyFromDocument = function() {
+    // Note JST 2015-08-27: I do not intend this code to be a paragon of
+    // elegance. The deadline looms, and I need to get it done. We'll see how
+    // bad it ends up being... :-)
+
+    var survey = {};
+    // TODO: check if this works on all browsers, esp. those that don't yet
+    // have a built-in date-type input element:
+    survey.date = d3.select('input[name=date]').node().value
+    var sel = document.getElementById('state-select');
+    survey.state = sel.options[sel.selectedIndex].value
+    survey.agency = document.getElementById('agency').value
+
+    survey.names = [];
+    survey.affiliations = [];
+    for (var i=1; i<=5; i++) {
+      survey.names[i-1] = document.getElementsByName('name' + i)[0].value;
+      survey.affiliations[i-1] =
+        document.getElementsByName('affiliation' + i)[0].value;
+    }
+
+    console.log(survey);
+    return survey;
   };
 
-  var readSurveyFromDocument = function() {
-    // TODO;
-    console.log('readSurveyFromDocument (stub)');
-    return {};
+  var writeSurveyToDocument = function(survey) {
+    console.log(survey);
+    d3.select('input[name=date]').node().value = survey.date;
+    if (survey.state === '') {
+      var stateIdx = 0;
+    } else {
+      var stateIdx =
+        d3.select('#state-select')
+          .select('option[value=' + survey.state + ']').node().index;
+    }
+    document.getElementById('state-select').selectedIndex = stateIdx;
+    document.getElementById('agency').value = survey.agency;
+
+    for (var i=1; i<=5; i++) {
+      document.getElementsByName('name' + i)[0].value = survey.names[i-1];
+      document.getElementsByName('affiliation' + i)[0].value =
+        survey.affiliations[i-1];
+    }
   };
 
   var getSurveyIDFromLocation = function() {
