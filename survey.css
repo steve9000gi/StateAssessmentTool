@@ -46,7 +46,11 @@ textarea {
 }
 
 .indented {
-  margin-left: 1em;
+  margin-left: 3em;
+}
+
+.indented-more {
+  margin-left: 4.4em;
 }
 
 html, body {
