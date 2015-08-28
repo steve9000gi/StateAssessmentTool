@@ -10,14 +10,10 @@ Here's what needs doing for the SAT project.
 
 - frontend:
   - Home page
-    - lists owned surveys, sorted by most recently modified time
-    - if admin, also lists all other surveys
     - each contains a link to open the survey
       - link is guarded by a popup prompt warning against simultaneous editing
     - also contains a link to download the survey (as TSV)
-    - also a button to create a new survey
   - Survey page
-    - the survey ID should be present in the URL
     - fetch the form data from the backend (serialize data -> JSON)
     - submit the form data to the backend (deserialize data <- JSON)
 
