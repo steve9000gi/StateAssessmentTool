@@ -64,7 +64,6 @@ $(document).ready(function() {
   };
 
   var setupLoginForm = function(loginSelector) {
-    if (location.pathname !== '/') return;
     checkAuthentication(function(isAuthenticated) {
       if (isAuthenticated) {
         location.href = 'home.html';
