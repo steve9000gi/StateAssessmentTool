@@ -10,13 +10,10 @@ Here's what needs doing for the SAT project.
 
 - frontend:
   - Home page
-    - each contains a link to open the survey
-      - link is guarded by a popup prompt warning against simultaneous editing
+    - guard "open survey" link with a JS alert about simultaneous editing
     - also contains a link to download the survey (as TSV)
   - Survey page
-    - fetch the form data from the backend (serialize data -> JSON)
-    - submit the form data to the backend (deserialize data <- JSON)
-    - fix: going just to the survey page pops up an alert about bad ID
-    - require authentication for the survey (and home?) pages
-    - need logout link
+    - redirect to / if not authenticated
+    - redirect to /home.html if bad map id
+    - need logout link (probably in footer)
 
