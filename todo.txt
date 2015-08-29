@@ -13,9 +13,11 @@ Here's what needs doing for the SAT project.
     - each contains a link to open the survey
       - link is guarded by a popup prompt warning against simultaneous editing
     - also contains a link to download the survey (as TSV)
+    - fix race condition: auth vs. loading surveys
   - Survey page
     - fetch the form data from the backend (serialize data -> JSON)
     - submit the form data to the backend (deserialize data <- JSON)
     - fix: going just to the survey page pops up an alert about bad ID
     - require authentication for the survey (and home?) pages
+    - need logout link
 
