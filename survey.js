@@ -376,6 +376,7 @@ $(document).ready(function() {
   // Update the document to match the data in the given survey object.
   var applySurvey = function(survey) {
     console.log(survey);
+    if (!survey || !survey.hasOwnProperty('names')) return; // unsaved survey
     applySurveyMetadata(survey);
     applySection1(survey.sections[0]);
     applySection2(survey.sections[1]);
