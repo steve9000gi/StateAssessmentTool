@@ -97,8 +97,7 @@ $(document).ready(function() {
     });
   };
 
-  var setupLogoutLink = function(logoutLinkSelector) {
-    if (location.pathname !== '/home.html') return;
+  window.setupLogoutLink = function(logoutLinkSelector) {
     d3.select(logoutLinkSelector)
       .on('click', logout);
   };

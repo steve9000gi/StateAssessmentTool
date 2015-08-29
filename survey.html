@@ -3624,6 +3624,10 @@
 	<button type="submit" id="submit">Save</button>
       </div>
 
+      <div class="box">
+        <a id="logout-link" href="">Logout</a>
+      </div>
+
       <div class="box"></div>
       <span class="stretch"></span>
 
@@ -3633,7 +3637,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      setupSurveyPage('#submit');
+      setupSurveyPage('#submit', '#logout-link');
     });
   </script>
 </body>

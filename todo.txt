@@ -11,6 +11,4 @@ Here's what needs doing for the SAT project.
 - frontend:
   - Home page
     - also contains a link to download the survey (as TSV)
-  - Survey page
-    - need logout link (probably in footer)
 

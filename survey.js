@@ -435,10 +435,11 @@ $(document).ready(function() {
       });
   };
 
-  window.setupSurveyPage = function(submitSelector) {
+  window.setupSurveyPage = function(submitSelector, logoutLinkSelector) {
     requireAuthentication(function() {
       if (fetchSurvey()) {
         setupSubmitButton(submitSelector);
+        setupLogoutLink(logoutLinkSelector);
       }
     });
   };
