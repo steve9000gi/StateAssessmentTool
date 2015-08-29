@@ -81,7 +81,7 @@ $(document).ready(function() {
           console.log('Logout error:', error);
           alert('Error logging out.');
         } else {
-          location.href = '/';
+          location.href = 'index.html';
         }
       });
   };
@@ -89,7 +89,7 @@ $(document).ready(function() {
   window.requireAuthentication = function(callback) {
     checkAuthentication(function(isAuthenticated) {
       if (!isAuthenticated) {
-        location.href = '/';
+        location.href = 'index.html';
       } else {
         callback();
       }
