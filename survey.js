@@ -265,7 +265,7 @@ $(document).ready(function() {
     if (question.radio) {
       radioEl.checked = true;
     }
-    setCheckBoxes.apply(radioEl);
+    if (radioEl) setCheckBoxes.apply(radioEl);
     document.getElementsByName(name + '.notes')[0].value = question.notes;
     for (var i=1; i <= question.checks.length; i++) {
       document.getElementsByName(name + '.' + i)[0].checked =
