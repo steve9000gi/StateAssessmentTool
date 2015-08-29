@@ -87,10 +87,12 @@ $(document).ready(function() {
       });
   };
 
-  var requireAuthentication = function() {
+  var requireAuthentication = function(callback) {
     checkAuthentication(function(isAuthenticated) {
       if (!isAuthenticated) {
         location.href = '/';
+      } else {
+        callback();
       }
     });
   };
@@ -186,10 +188,11 @@ $(document).ready(function() {
 
   window.setupHomePage =
   function(logoutLinkSelector, surveyListSelector, createButtonSelector) {
-    requireAuthentication();
-    setupLogoutLink(logoutLinkSelector);
-    setupMapList(surveyListSelector);
-    setupCreateButton(createButtonSelector);
+    requireAuthentication(function() {
+      setupLogoutLink(logoutLinkSelector);
+      setupMapList(surveyListSelector);
+      setupCreateButton(createButtonSelector);
+    });
   };
 
 });
