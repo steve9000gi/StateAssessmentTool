@@ -77,7 +77,7 @@
 (defmethod flatten-question :radio-checks
   [{:strs [radio checks notes listText]}]
   (apply conj
-         ["selectOneThenSelectAll" (or listText "") notes (or radio "_")]
+         ["selectOneThenSelectMany" (or listText "") notes (or radio "_")]
          (checks->strs checks)))
 
 (defmethod flatten-question :radio
