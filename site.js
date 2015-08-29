@@ -140,6 +140,7 @@ $(document).ready(function() {
 
     rows.append('td')
       .append('a')
+      .attr('class', 'guarded')
       .attr('href', function(d) { return 'survey.html?id=' + d.id})
       .text(function(d) { return d.id });
     rows.append('td').text(function(d) { return d.created_at });
@@ -147,6 +148,15 @@ $(document).ready(function() {
     if (asAdmin) {
       rows.append('td').text(function(d) { return d.owner_email });
     }
+
+    d3.selectAll('a.guarded')
+      .on('click', function() {
+        var msg = 'Warning: if somebody else is editing this survey, either ' +
+                  'your changes or theirs will be lost! Press OK to continue.';
+        if (!confirm(msg)) {
+          d3.event.preventDefault();
+        }
+      })
   };
 
   var setupMapList = function(surveyListSelector) {
