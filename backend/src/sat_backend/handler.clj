@@ -36,8 +36,18 @@
                  (assoc :async-channel "redacted")
                  (update-in [:body] slurp))))
 
-  (POST "/register" [email password]
-    (user/create email password))
+  (POST "/register" {:keys [current-user-id] {:strs [email password]} :params}
+    (if (not current-user-id)
+      (resp/forbidden {:message "not authenticated"})
+      (if (not= current-user-id 1)
+        (resp/forbidden {:message "not authorized"})
+        (user/create email password))))
+  (POST "/promote" {:keys [current-user-id] {:strs [email]} :params}
+    (if (not current-user-id)
+      (resp/forbidden {:message "not authenticated"})
+      (if (not= current-user-id 1)
+        (resp/forbidden {:message "not authorized"})
+        (user/promote email))))
   (GET "/testauth" {:keys [current-user-id]}
     (if current-user-id
       (resp/ok {:message "authenticated"})

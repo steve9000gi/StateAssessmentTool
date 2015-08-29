@@ -3,10 +3,13 @@
     [com.stuartsierra.component :as component]
     [clojure.java.jdbc :as jdbc]
     [clojure.java.io :as io]
+    [cemerick.friend.credentials :as creds]
     )
   (:import
     com.jolbox.bonecp.BoneCPDataSource
     org.postgresql.util.PSQLException))
+
+(def password-work-factor 10)
 
 (defn- schema-installed?
   [datasource]
@@ -20,17 +23,39 @@
         false
         (throw e)))))
 
-(defn- create-db
+(defn- install-schema
   [datasource]
   (jdbc/db-do-prepared
     {:datasource datasource}
     (-> "schema.sql" io/resource slurp)))
 
+(defn- add-super-user
+  [datasource]
+  (let [password (-> (jdbc/query {:datasource datasource}
+                                 ["select gen_random_uuid() as uuid"])
+                     first
+                     :uuid
+                     str)
+        email "superuser@sat.com.notadomain"]
+    (println "Creating the superuser:")
+    (println "Email:   " email)
+    (println "Password:" password)
+    (println "IMPORTANT: that is the only time this password will be shown.")
+    (println "Save it somewhere, or you won't be able to create new users.")
+    (jdbc/insert! {:datasource datasource}
+                  "sat.users"
+                  {:email email
+                   :password (creds/hash-bcrypt
+                               password
+                               :work-factor password-work-factor)
+                   :is_admin true})))
+
 (defn- ensure-schema-installed
   [datasource]
   (when-not (schema-installed? datasource)
     (println "No database schema found; installing...")
-    (create-db datasource)))
+    (install-schema datasource)
+    (add-super-user datasource)))
 
 (defn- pooled-datasource
   [{:keys [classname subprotocol user password init-part-size max-part-size

@@ -1,7 +1,6 @@
 Here's what needs doing for the SAT project.
 
 - backend
-  - create an admin script to create new users
   - API route to download data as CSV/TSV
 
 - infrastructure

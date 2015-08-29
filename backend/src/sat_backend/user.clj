@@ -4,7 +4,7 @@
     [cemerick.friend.credentials :as creds]
     [reloaded.repl :refer [system]]
     [ring.util.http-response :as resp]
-    [sat-backend.postgres :refer [insert! query]]
+    [sat-backend.postgres :refer [insert! update! query]]
     )
   (:import org.postgresql.util.PSQLException))
 
@@ -89,6 +89,27 @@
                               "  WHERE id=?")
                          user-id]))]
       (= (str (:auth_token user)) given-token))))
+
+(defn promote
+  [email]
+  (prn 'user/promote email)
+  (if-not (valid-email? email)
+    (resp/bad-request {:message "invalid email"})
+    (try
+      (let [num-updated (first
+                          (update!
+                            (:db system)
+                            "sat.users"
+                            {:is_admin true}
+                            ["email = ?" email]))]
+        (if (= 1 num-updated)
+          (resp/ok {:message "OK"})
+          (resp/bad-request {:message "unknown error (bad email address?)"
+                             :data {:num-updated num-updated}})))
+      (catch Exception e
+        (println "Exception" e)
+        (.printStackTrace e)
+        (resp/internal-server-error {:message (.getMessage e)})))))
 
 (defn create
   [email password]
