@@ -228,7 +228,7 @@ $(document).ready(function() {
     } else {
       var stateIdx =
         d3.select('#state-select')
-          .select('option[value=' + survey.state + ']').node().index;
+          .select('option[value="' + survey.state + '"]').node().index;
     }
     document.getElementById('state-select').selectedIndex = stateIdx;
     document.getElementById('agency').value = survey.agency;
