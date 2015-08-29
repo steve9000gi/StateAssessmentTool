@@ -38,9 +38,9 @@
   (apply concat
          (map-indexed (fn [index question]
                         (if (map? question)
-                          [[(str "q" index) question]]
+                          [[(str "q" (inc index)) question]]
                           (mapv (fn [subquestion designator]
-                                  [(str "q" index designator)
+                                  [(str "q" (inc index) designator)
                                    subquestion])
                                 question
                                 ["a" "b" "c" "d"])))
