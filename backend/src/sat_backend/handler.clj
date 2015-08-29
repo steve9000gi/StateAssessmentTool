@@ -29,9 +29,11 @@
 
 (defroutes routes
   (GET "/ping" [] "pong")  ;; health check
-  (GET "/echo" {:as req}
+  ;; This is useful for debugging middleware, but should be commented out in
+  ;; production.
+  #_(GET "/echo" {:as req}
     (resp/ok (assoc req :async-channel "redacted")))
-  (POST "/echo" {:as req}
+  #_(POST "/echo" {:as req}
     (resp/ok (-> req
                  (assoc :async-channel "redacted")
                  (update-in [:body] slurp))))
