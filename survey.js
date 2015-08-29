@@ -1,7 +1,7 @@
 $(document).ready(function() {
   "use strict";
 
-  var backendBase = 'http://localhost:8081';
+  var backendBase = 'http://syssci.renci.org:8081';
 
   ///////////////////////////////////////////////////////////////////////////// 
   // setCheckBoxes: assumes the following DOM context:

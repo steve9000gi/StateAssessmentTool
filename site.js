@@ -1,6 +1,6 @@
 $(document).ready(function() {
   "use strict";
-  window.backendBase = 'http://localhost:8081';
+  window.backendBase = 'http://syssci.renci.org:8081';
 
   // Check whether we're authenticated at the backend, and call the callback
   // with the boolean result (i.e. true = authenticated, false = not).
