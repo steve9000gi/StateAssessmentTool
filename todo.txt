@@ -16,4 +16,6 @@ Here's what needs doing for the SAT project.
   - Survey page
     - fetch the form data from the backend (serialize data -> JSON)
     - submit the form data to the backend (deserialize data <- JSON)
+    - fix: going just to the survey page pops up an alert about bad ID
+    - require authentication for the survey (and home?) pages
 
