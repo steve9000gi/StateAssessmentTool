@@ -175,6 +175,9 @@ $(document).ready(function() {
       .on('error', function() { alert('Error talking to backend server.') })
       .on('load', function(result) {
         message.text('');
+        message.append('a')
+          .attr('href', 'spreadsheet-notes.html')
+          .text('(Help with downloaded surveys)');
         renderSurveyList(surveyListSelector, result)
       })
       .send('GET');
