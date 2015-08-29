@@ -81,8 +81,8 @@
          (checks->strs checks)))
 
 (defmethod flatten-question :radio
-  [{:strs [radio notes listText]}]
-  ["selectOne" (or listText "") notes (or radio "_")])
+  [{:strs [radio notes listText otherText]}]
+  ["selectOne" (or listText "") notes (or radio "_") (or otherText "")])
 
 (defmethod flatten-question :checks
   [{:strs [notes checks]}]
