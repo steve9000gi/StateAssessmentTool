@@ -389,21 +389,32 @@ $(document).ready(function() {
     if (match) {
       return +match[1];
     } else {
-      alert('Error: invalid survey ID');
-      return null;
+      alert('Error: bad survey ID; redirecting to home page.');
+      location.href = 'home.html';
     }
   };
 
   var fetchSurvey = function() {
     var id = getSurveyIDFromLocation();
-    if (!id) return;
+    if (!id) return false;
     d3.json(backendBase + '/survey/' + id)
       .on('beforesend', function(request) { request.withCredentials = true })
-      .on('error', function() { alert('Error talking to backend server.') })
+      .on('error', function(response) {
+        var respObj = JSON.parse(response.response);
+        var message = respObj && respObj.message;
+        if (response.status == 404 &&
+            message == 'survey ID ' + id + ' not found') {
+          alert('Survey ' + id + ' not found. Redirecting to home page.')
+          location.href = 'home.html';
+        } else {
+          alert('Error talking to backend server.')
+        }
+      })
       .on('load', function(data) {
         applySurvey(data.document);
       })
       .send('GET');
+    return true;
   }
 
   var setupSubmitButton = function(submitButtonSelector) {
@@ -425,8 +436,11 @@ $(document).ready(function() {
   };
 
   window.setupSurveyPage = function(submitSelector) {
-    fetchSurvey();
-    setupSubmitButton(submitSelector);
+    requireAuthentication(function() {
+      if (fetchSurvey()) {
+        setupSubmitButton(submitSelector);
+      }
+    });
   };
 
 });

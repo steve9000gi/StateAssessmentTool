@@ -12,7 +12,5 @@ Here's what needs doing for the SAT project.
   - Home page
     - also contains a link to download the survey (as TSV)
   - Survey page
-    - redirect to / if not authenticated
-    - redirect to /home.html if bad map id
     - need logout link (probably in footer)
 

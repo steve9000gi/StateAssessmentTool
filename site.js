@@ -87,7 +87,7 @@ $(document).ready(function() {
       });
   };
 
-  var requireAuthentication = function(callback) {
+  window.requireAuthentication = function(callback) {
     checkAuthentication(function(isAuthenticated) {
       if (!isAuthenticated) {
         location.href = '/';
