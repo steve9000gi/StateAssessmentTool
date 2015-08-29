@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>State Assessment Tool</title>
+  <title>MCH Survey</title>
   <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,12 +20,9 @@
     </header>
 
     <main id="main">
-      <h2>Login</h2>
-      <p>You must login before accessing this tool.</p>
-      <p>If you don't have an account, contact <a href="mailto:stevec@renci.org">stevec@renci.org</a>.</p>
-
-      <div id="login">
-      </div>
+      <a id="logout-link" href="#">Logout</a>
+      <div id="survey-list"></div>
+      <button id="create-survey">Create New Survey</button>
     </main>
   </div>
 
@@ -33,9 +30,10 @@
   <script type="text/javascript" src="survey.js"></script>
   <script type="text/javascript">
     $(document).ready(function() {
-      setupIndexPage('#login');
+      setupHomePage('#logout-link', '#survey-list', '#create-survey');
     });
   </script>
 </body>
 </html>
+
 

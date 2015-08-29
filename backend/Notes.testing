@@ -1,0 +1,152 @@
+First, wipe the database:
+
+    dropdb sat
+    createdb sat
+
+Next, start the server (which will add the schema to the database):
+
+    lein repl
+
+```clojure
+(go)
+```
+
+Now do a bunch of curl commands:
+
+    # heartbeat:
+    curl http://localhost:8080/ping
+    # "pong"
+
+    # create user; missing email
+    curl -dpassword="foo" http://localhost:8080/register
+    # {"message": "invalid email"}
+
+    # create user; bad email
+    curl -demail="jeff@@altometrics.com" -dpassword="foo" http://localhost:8080/register
+    # {"message": "invalid email"}
+
+    # create user; missing password
+    curl -demail="jeff@altometrics.com" http://localhost:8080/register
+    # {"message": "invalid password"}
+
+    # create user; bad password
+    curl -demail="jeff@altometrics.com" -dpassword="" http://localhost:8080/register
+    # {"message": "invalid password"}
+
+    # create user; successful
+    curl -demail="jeff@altometrics.com" -dpassword="foo" http://localhost:8080/register
+    # {"id":1,"email":"jeff@altometrics.com"}
+
+    # create user; conflict
+    curl -v -demail="jeff@altometrics.com" -dpassword="foo" http://localhost:8080/register
+    # {"message":"email already exists"}
+
+    # create another user with a + in the email address
+    curl -demail="jeff%2B2@altometrics.com" -dpassword="foo" http://localhost:8080/register
+    # {"id":2,"email":"jeff+2@altometrics.com"}
+
+    # login; bad email
+    curl -v -demail="none@altometrics.com" -dpassword="foo" http://localhost:8080/login
+    # {"message":"invalid email"}
+
+    # login; bad password
+    curl -demail="jeff@altometrics.com" -dpassword="foO" http://localhost:8080/login
+    # {"message":"wrong password"}
+
+    # login success
+    curl -v -demail="jeff@altometrics.com" -dpassword="foo" http://localhost:8080/login
+    # look for the Set-Cookie header
+    # body should be similar to:
+    # {"auth_token":"dbe1c507-2ce0-44cf-af38-a7a192a4aacd"}
+
+    # Check for cookie-based auth (assuming `jq` tool installed):
+    export TOKEN=$(curl -demail="jeff@altometrics.com" -dpassword="foo" http://localhost:8080/login 2>/dev/null | cut -d: -f2 | cut -d\" -f2)
+    curl -buser_id=1,auth_token=$TOKEN http://localhost:8080/echo 2>/dev/null | jq . | grep current-user-id
+    # Should output:
+    #  "current-user-id": "1",
+
+    # Check for non-auth with invalid auth_token
+    curl -buser_id=1,auth_token=invalid http://localhost:8080/echo 2>/dev/null | jq . | grep current-user-id
+    # Should output nothing
+
+    # Test authentication (alternate route)
+    curl -v -buser_id=1,auth_token=$TOKEN http://localhost:8080/testauth
+    # Should output {"message":"authenticated"}
+
+    # Test non-authentication (alternate route)
+    curl -v -buser_id=9,auth_token=$TOKEN http://localhost:8080/testauth
+    # Should output {"message":"not authenticated"}
+
+    # Logout
+    curl -v -buser_id=2,auth_token=fa0dc3e3-feba-4336-b48c-68907ed85908 http://localhost:8080/logout
+    # Check for Set-Cookie header with value = <empty>
+    # Output should be:
+    # {"message":"ok"}
+
+    # Saving a survey
+    curl -H 'Content-Type: application/json' \
+         -H 'Accept: application/json' \
+         -X POST \
+         -buser_id=1,auth_token=$TOKEN \
+         -d '{"foo": [1,2,3]}' \
+         http://localhost:8080/survey
+    # Should get some JSON back
+
+    # Saving a complicated survey (from a file)
+    curl -H 'Content-Type: application/json' \
+         -H 'Accept: application/json' \
+         -X POST \
+         -buser_id=1,auth_token=$TOKEN \
+         -T path/to/survey-document.json \
+         http://localhost:8080/survey
+    # Should get some JSON back
+
+    # Updating a complicated survey (from a file)
+    curl -H 'Content-Type: application/json' \
+         -H 'Accept: application/json' \
+         -X PUT \
+         -buser_id=1,auth_token=$TOKEN \
+         -T backend/survey-document.json \
+         http://localhost:8080/survey/1
+    # Should get some JSON back
+
+    # Listing surveys
+    curl -buser_id=1,auth_token=$TOKEN \
+         http://localhost:8080/surveys
+    # Should get some JSON back
+
+    # Fetching a survey
+    curl -buser_id=1,auth_token=$TOKEN \
+         http://localhost:8080/survey/1
+
+    # Trying to fetch a nonexistent survey
+    curl -buser_id=1,auth_token=$TOKEN \
+         http://localhost:8080/survey/99
+    # {"message":"survey ID 99 not found"}
+
+    # Fetching a survey not owned by authenticated user
+    export TOKEN2=$(curl -demail="jeff%2B2@altometrics.com" -dpassword="foo" http://localhost:8080/login 2>/dev/null | cut -d: -f2 | cut -d\" -f2)
+    curl -buser_id=2,auth_token=$TOKEN2 \
+         http://localhost:8080/survey/1
+    # {"message":"survey not owned by authenticated user"}
+
+    # Fetch survey: non-numeric id
+    curl -buser_id=1,auth_token=692ec64b-58bb-4a68-8581-1ec5b919b9a3 http://localhost:8080/survey/a
+    # {"message":"invalid survey ID: \"a\""}
+
+
+    ##### Testing admin listing #####
+    dropdb sat && createdb sat
+    psql -f backend/resources/schema.sql sat
+    curl -demail="jeff@altometrics.com" -dpassword="foo" http://localhost:8080/register
+    curl -demail="jeff%2B2@altometrics.com" -dpassword="foo" http://localhost:8080/register
+    export TOKEN=$(curl -demail="jeff@altometrics.com" -dpassword="foo" http://localhost:8080/login 2>/dev/null | cut -d: -f2 | cut -d\" -f2)
+    export TOKEN2=$(curl -demail="jeff%2B2@altometrics.com" -dpassword="foo" http://localhost:8080/login 2>/dev/null | cut -d: -f2 | cut -d\" -f2)
+    curl -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST -buser_id=1,auth_token=$TOKEN -d '{"foo": [1,2,3]}' http://localhost:8080/survey
+    curl -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST -buser_id=2,auth_token=$TOKEN2 -d '{"foo": [1,2,3]}' http://localhost:8080/survey
+    curl -buser_id=1,auth_token=$TOKEN http://localhost:8080/surveys
+    # should return 1 survey
+    echo "update sat.users set is_admin = true where id=1;" | psql sat
+    curl -buser_id=1,auth_token=$TOKEN http://localhost:8080/surveys
+    # should return 2 surveys
+

@@ -1,6 +1,8 @@
 $(document).ready(function() {
   "use strict";
 
+  var backendBase = 'http://localhost:8081';
+
   ///////////////////////////////////////////////////////////////////////////// 
   // setCheckBoxes: assumes the following DOM context:
   // <div id = "divId">
@@ -39,9 +41,343 @@ $(document).ready(function() {
   $("#s5q1c input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1d input[type=radio]").on("change", setCheckBoxes);
 
-  $("#submit").on("click", function() {
-    alert("This button is a placeholder. When this survey application is "
-	+ "up and running, this is how you'll save your survey results. At "
-	+ "this point, however, nothing has been saved.");
-  });
+  // Check whether we're authenticated at the backend, and call the callback
+  // with the boolean result (i.e. true = authenticated, false = not).
+  var checkAuthentication = function(callback) {
+    d3.xhr(backendBase + '/testauth')
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .get(function(error, data) {
+        if (error) {
+          callback(false);
+        } else {
+          var message = JSON.parse(data.response).message;
+          if (message === 'authenticated') {
+            callback(true);
+          } else {
+            callback(false);
+          }
+        }
+      })
+  };
+
+  var renderLoginForm = function(loginSelector) {
+    var container = d3.select(loginSelector);
+    var form = container
+      .append('form')
+      .html('<label>' +
+            '  Email address:' +
+            '  <input type="text" name="email" />' +
+            '</label>' +
+            '<br />' +
+            '<label>' +
+            '  Password:' +
+            '  <input type="password" name="password" />' +
+            '</label>' +
+            '<br />' +
+            '<input type="submit" name="Login" />');
+    var message = container
+      .append('p')
+      .attr('class', 'message');
+
+    form.on('submit', function() {
+      d3.event.preventDefault();
+      message.text('Loading...');
+      var requestData = {
+        email   : d3.event.target[0].value,
+        password: d3.event.target[1].value
+      };
+      d3.xhr(backendBase + '/login')
+        .header('Content-Type', 'application/json')
+        .on('beforesend', function(request) { request.withCredentials = true })
+        .post(JSON.stringify(requestData), function(error, data) {
+          message.text('');
+          if (error) {
+            message.text('Login failed');
+          } else {
+            d3.select(loginSelector).style('visibility', 'hidden');
+            d3.select(loginSelector).selectAll().remove();
+            location.href = 'home.html';
+          }
+        });
+    });
+  };
+
+  var setupLoginForm = function(loginSelector) {
+    if (location.pathname !== '/') return;
+    checkAuthentication(function(isAuthenticated) {
+      if (isAuthenticated) {
+        location.href = 'home.html';
+      } else {
+        renderLoginForm(loginSelector);
+      }
+    });
+  };
+
+  var logout = function() {
+    d3.xhr(backendBase + '/logout')
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .get(function(error, data) {
+        if (error) {
+          console.log('Logout error:', error);
+          alert('Error logging out.');
+        } else {
+          location.href = '/';
+        }
+      });
+  };
+
+  var requireAuthentication = function() {
+    checkAuthentication(function(isAuthenticated) {
+      if (!isAuthenticated) {
+        location.href = '/';
+      }
+    });
+  };
+
+  var setupLogoutLink = function(logoutLinkSelector) {
+    if (location.pathname !== '/home.html') return;
+    d3.select(logoutLinkSelector)
+      .on('click', logout);
+  };
+
+  var renderSurveyList = function(surveyListSelector, data) {
+    // TODO: test this selection pattern:
+    d3.select(surveyListSelector).selectAll().remove();
+    if (!data || data.length === 0) {
+      d3.select(surveyListSelector).append('p')
+        .text("You're logged in, but you don't have any surveys yet. " +
+              "To get started, create a survey using the button below.");
+      return;
+    }
+
+    var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
+    var columns =
+      ['Map ID', 'Created At', 'Modified At'];
+    if (asAdmin) {
+      columns.push('Owner Email');
+    }
+
+    var table = d3.select(surveyListSelector).append('table'),
+        thead = table.append('thead'),
+        tbody = table.append('tbody');
+
+    thead
+      .append('tr')
+      .selectAll('th')
+      .data(columns)
+      .enter()
+      .append('th')
+      .text(String);
+
+    var rows = tbody
+      .selectAll('tr')
+      .data(data)
+      .enter()
+      .append('tr');
+
+    rows.append('td')
+      .append('a')
+      .attr('href', function(d) { return 'survey.html?id=' + d.id})
+      .text(function(d) { return d.id });
+    rows.append('td').text(function(d) { return d.created_at });
+    rows.append('td').text(function(d) { return d.modified_at });
+    if (asAdmin) {
+      rows.append('td').text(function(d) { return d.owner_email });
+    }
+  };
+
+  var setupMapList = function(surveyListSelector) {
+    var message = d3.select(surveyListSelector)
+      .append('div')
+      .attr('class', 'loading-message')
+      .text('Loading...');
+    d3.json(backendBase + '/surveys')
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .on('error', function() { alert('Error talking to backend server.') })
+      .on('load', function(result) {
+        message.text('');
+        renderSurveyList(surveyListSelector, result)
+      })
+      .send('GET');
+  };
+
+  var setupCreateButton = function(createButtonSelector) {
+    d3.select(createButtonSelector)
+      .on('click', function() {
+        d3.json(backendBase + '/survey')
+          .on('beforesend', function(request){ request.withCredentials = true })
+          .on('error', function() { alert('Error talking to backend server.') })
+          .on('load', function(data) {
+            if (data && typeof data === 'object' && data.hasOwnProperty('id')) {
+              location.href = 'survey.html?id=' + data.id;
+            } else {
+              console.log('unexpected data received:', data);
+              alert('Error: unexpected response from the backend server.');
+            }
+          })
+          .send('POST', JSON.stringify({}));
+      });
+  };
+
+  // Warning: modifies its argument.
+  var slurpSurveyMetadata = function(survey) {
+    // TODO: check if this works on all browsers, esp. those that don't yet
+    // have a built-in date-type input element:
+    survey.date = d3.select('input[name=date]').node().value
+    var sel = document.getElementById('state-select');
+    survey.state = sel.options[sel.selectedIndex].value
+    survey.agency = document.getElementById('agency').value
+
+    survey.names = [];
+    survey.affiliations = [];
+    for (var i=1; i<=5; i++) {
+      survey.names[i-1] = document.getElementsByName('name' + i)[0].value;
+      survey.affiliations[i-1] =
+        document.getElementsByName('affiliation' + i)[0].value;
+    }
+  };
+
+  var slurpRadio = function(name) {
+    // TODO: try using d3's property method here.
+    var node = d3.select('input[name="' + name + '"]:checked').node();
+    return {
+      radio: node ? node.value : '',
+      notes: d3.select('textarea[name="' + name + '.notes"]').node().value
+    };
+  };
+
+  var slurpChecks = function(name) {
+    var arr = [];
+    d3.selectAll('input[name^="' + name + '.a"]')
+      .each(function(d,i) { arr.push(this.checked) })
+    return {
+      checks: arr,
+      notes: d3.select('textarea[name="' + name + '.notes"]').node().value
+    };
+  };
+
+  var slurpSection1 = function() {
+    var section = {questions: []};
+    section.questions[0] = slurpRadio('s1.q1');
+    section.questions[1] = slurpRadio('s1.q2');
+    section.questions[2] = slurpRadio('s1.q3');
+    section.questions[3] = slurpChecks('s1.q4');
+    return section;
+  };
+
+  // Read survey data from document, and return a survey object.
+  var slurpSurvey = function() {
+    var survey = {};
+    slurpSurveyMetadata(survey);
+    survey.sections = [];
+    survey.sections[0] = slurpSection1();
+
+    console.log(survey);
+    return survey;
+  };
+
+  var applySurveyMetadata = function(survey) {
+    d3.select('input[name=date]').node().value = survey.date;
+    if (survey.state === '') {
+      var stateIdx = 0;
+    } else {
+      var stateIdx =
+        d3.select('#state-select')
+          .select('option[value=' + survey.state + ']').node().index;
+    }
+    document.getElementById('state-select').selectedIndex = stateIdx;
+    document.getElementById('agency').value = survey.agency;
+    for (var i=1; i<=5; i++) {
+      document.getElementsByName('name' + i)[0].value = survey.names[i-1];
+      document.getElementsByName('affiliation' + i)[0].value =
+        survey.affiliations[i-1];
+    }
+  }
+
+  var applyRadio = function(question, name) {
+    if (question.radio) {
+      document.getElementsByName(name)[question.radio-1].checked = true;
+    }
+    document.getElementsByName(name + '.notes')[0].value = question.notes;
+  };
+
+  var applyChecks = function(question, name) {
+    for (var i=1; i <= question.checks.length; i++) {
+      document.getElementsByName(name + '.a' + i)[0].checked =
+        question.checks[i-1];
+    }
+    document.getElementsByName(name + '.notes')[0].value = question.notes;
+  };
+
+  var applySection1 = function(section) {
+    applyRadio(section.questions[0], 's1.q1');
+    applyRadio(section.questions[1], 's1.q2');
+    applyRadio(section.questions[2], 's1.q3');
+    applyChecks(section.questions[3], 's1.q4');
+  };
+
+  // Update the document to match the data in the given survey object.
+  var applySurvey = function(survey) {
+    console.log(survey);
+    applySurveyMetadata(survey);
+    applySection1(survey.sections[0]);
+  };
+
+  var getSurveyIDFromLocation = function() {
+    var match = location.search.match(/^\?id=(\d+)$/);
+    if (match) {
+      return +match[1];
+    } else {
+      alert('Error: invalid survey ID');
+      return null;
+    }
+  };
+
+  var fetchSurvey = function() {
+    var id = getSurveyIDFromLocation();
+    if (!id) return;
+    d3.json(backendBase + '/survey/' + id)
+      .on('beforesend', function(request) { request.withCredentials = true })
+      .on('error', function() { alert('Error talking to backend server.') })
+      .on('load', function(data) {
+        applySurvey(data.document);
+      })
+      .send('GET');
+  }
+
+  var setupSubmitButton = function(submitButtonSelector) {
+    var id = getSurveyIDFromLocation();
+    if (!id) return;
+    d3.select(submitButtonSelector)
+      .on('click', function() {
+        d3.json(backendBase + '/survey/' + id)
+          .on('beforesend', function(request){ request.withCredentials = true })
+          .on('error', function() {
+            console.error('Error talking to backend server.');
+            // alert('Error talking to backend server.')
+          })
+          .on('load', function(data) {
+            console.log('survey ' + id + ' saved');
+          })
+          .send('PUT', JSON.stringify(slurpSurvey()));
+      });
+  };
+
+  window.setupIndexPage = function(loginSelector) {
+    setupLoginForm(loginSelector);
+  };
+
+  window.setupHomePage =
+  function(logoutLinkSelector, surveyListSelector, createButtonSelector) {
+    requireAuthentication();
+    setupLogoutLink(logoutLinkSelector);
+    setupMapList(surveyListSelector);
+    setupCreateButton(createButtonSelector);
+  };
+
+  window.setupSurveyPage = function(submitSelector) {
+    fetchSurvey();
+    setupSubmitButton(submitSelector);
+  };
+
 });

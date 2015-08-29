@@ -1,0 +1,19 @@
+Here's what needs doing for the SAT project.
+
+- backend
+  - create an admin script to create new users
+  - API route to download data as CSV/TSV
+
+- infrastructure
+  - should be able to pretty much just copy the stuff from SSM
+  - use port 8081, which has been opened on syssci for this purpose
+
+- frontend:
+  - Home page
+    - each contains a link to open the survey
+      - link is guarded by a popup prompt warning against simultaneous editing
+    - also contains a link to download the survey (as TSV)
+  - Survey page
+    - fetch the form data from the backend (serialize data -> JSON)
+    - submit the form data to the backend (deserialize data <- JSON)
+
