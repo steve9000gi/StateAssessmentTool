@@ -77,6 +77,12 @@
          (pos? user-id)]}
   (-> user-id internal-fetch :is_admin))
 
+(defn get-email
+  [user-id]
+  {:pre [(integer? user-id)
+         (pos? user-id)]}
+  (-> user-id internal-fetch :email))
+
 (defn valid-auth-token
   [user-id given-token]
   (when (and (string? user-id)

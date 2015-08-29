@@ -7,6 +7,7 @@
     [ring.util.http-response :as resp]
     [sat-backend.postgres :refer [insert! update! query]]
     [sat-backend.user :as user]
+    [sat-backend.tsv :refer [to-tsv]]
     [cheshire.core :refer [generate-string parse-string parse-stream]]
     )
   (:import
@@ -114,6 +115,28 @@
                    (not (user/is-admin? owner-id)))
             (resp/forbidden {:message "survey not owned by authenticated user"})
             (resp/ok (result->response survey))))))))
+
+(defn fetch-tsv
+  [owner-id id]
+  {:pre [(integer? owner-id)
+         (pos? owner-id)]}
+  (prn 'survey/fetch-tsv {:owner-id owner-id, :survey-id id})
+  (let [survey-id (try
+                    (Integer/parseInt id)
+                    (catch NumberFormatException e nil))]
+    (if (or (nil? survey-id)
+            (not (pos? survey-id)))
+      (resp/bad-request {:message (str "invalid survey ID: " (pr-str id))})
+      (let [survey (internal-fetch survey-id)]
+        (if-not survey
+          (resp/not-found
+            {:message (format "survey ID %d not found" survey-id)})
+          (if (and (not= owner-id (:owner survey))
+                   (not (user/is-admin? owner-id)))
+            (resp/forbidden {:message "survey not owned by authenticated user"})
+            (resp/content-type
+              (resp/ok (-> survey result->response to-tsv))
+              "text/csv")))))))
 
 (defn update
   [owner-id id document]

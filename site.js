@@ -114,7 +114,7 @@ $(document).ready(function() {
 
     var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
     var columns =
-      ['Map ID', 'Created At', 'Modified At'];
+      ['Map ID', 'Created At', 'Modified At', 'Download'];
     if (asAdmin) {
       columns.push('Owner Email');
     }
@@ -144,6 +144,13 @@ $(document).ready(function() {
       .text(function(d) { return d.id });
     rows.append('td').text(function(d) { return d.created_at });
     rows.append('td').text(function(d) { return d.modified_at });
+    rows.append('td')
+      .append('a')
+      .attr('href', function(d) {
+        return backendBase + '/survey/' + d.id + '.tsv';
+      })
+      .text('download')
+
     if (asAdmin) {
       rows.append('td').text(function(d) { return d.owner_email });
     }

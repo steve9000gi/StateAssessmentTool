@@ -15,6 +15,7 @@
                  [org.clojure/java.jdbc "0.4.1"]
                  [com.jolbox/bonecp "0.8.0.RELEASE"]
                  [cheshire "5.5.0"]
+                 [clojure-csv/clojure-csv "2.0.1"]
                  ]
 
   :profiles {:uberjar {:aot :all
