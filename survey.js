@@ -223,7 +223,7 @@ $(document).ready(function() {
 
   var applySurveyMetadata = function(survey) {
     d3.select('input[name=date]').node().value = survey.date;
-    if (survey.state === '') {
+    if (!survey.state) {
       var stateIdx = 0;
     } else {
       var stateIdx =
