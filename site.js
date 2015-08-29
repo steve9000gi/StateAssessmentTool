@@ -74,7 +74,7 @@ $(document).ready(function() {
   };
 
   var logout = function() {
-    d3.xhr(backendBase + '/logout')
+    d3.xhr(backendBase + 'index.html')
       .on('beforesend', function(request) { request.withCredentials = true })
       .get(function(error, data) {
         if (error) {
