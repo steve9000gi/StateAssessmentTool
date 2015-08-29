@@ -21,6 +21,13 @@
    (vec (concat ["Names"] (get doc "names")))
    (vec (concat ["Affiliations"] (get doc "affiliations")))])
 
+(defn- followup-notes
+  [{:strs [sections] :as doc}]
+  (let [notes (map #(get % "followupNotes") sections)]
+    (map-indexed (fn [index note]
+                   [(str "s" (inc index)) note])
+                 notes)))
+
 (defn- checks->strs
   [checks]
   (for [check checks]
@@ -101,6 +108,7 @@
       (concat
         (survey-metadata survey)
         (doc-metadata doc)
+        (followup-notes doc)
         sections))))
 
 (defn to-tsv
