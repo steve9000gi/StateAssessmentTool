@@ -1047,52 +1047,66 @@
       </label>
       <br/>
 
-      <p>4) Has your state adopted any strategies to ensure children receive
-      dental benefits, such as:</p>
+      <div id="s2q4">
 
-      <label>
-	<input type="radio" name="s2.q4" value="1" />
-	Requiring purchase of stand-alone dental plans for children
-      </label>
-      <br/>
+  	<P>4) Has your state adopted any strategies to ensure children receive
+	dental benefits?</p>
 
-      <label>
-	<input type="radio" name="s2.q4" value="2" />
-	Encouraging issuers to embed dental benefits in medical health plans
-      </label>
-      <br/>
+	<label>
+	  <input type="radio" name="s2.q4" value="1"/>
+	  Yes (Select all that apply):
+	</label>
+	<br/>
 
-      <label>
-	<input type="radio" name="s2.q4" value="3" />
-	Making dental coverage more affordable
-      </label>
-      <br/>
+	<label>
+	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.1"
+	  disabled="disabled" value="Purchase stand-alone dental plans" />
+	  Requiring purchase of stand-alone dental plans for children
+	</label>
+	<br/>
 
-      <label>
-	<input type="radio" name="s2.q4" value="4" />
-	No 
-      </label>
-      <br/>
+	<label>
+	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.2"
+	  disabled="disabled" value="Embed dental benefits" />
+	  Encouraging issuers to embed dental benefits in medical health plans
+	</label>
+	<br/>
 
-      <label>
-	<input type="radio" name="s2.q4" value="5" />
-	Unsure 
-      </label>
-      <br/>
+	<label>
+	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.3"
+	  disabled="disabled" value="More affordable coverage" />
+	  Making dental coverage more affordable
+	</label>
+	<br/>
 
-      <label>
-	<input type="radio" name="s2.q4" value="6" />
-	Other: 
-      </label>
+	<label>
+	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.4"
+	  id="s2q4-other" disabled="disabled" value="Other"/>
+	  Other: 
+	</label>
 
-      <input type="text" name="s2.q4.other"/>
-      <br/>
+	<input type="text" class="txt" name="s2.q4.other" disabled="disabled"/>
+	<br/>
 
-      <label>
-	Notes:<br/>
-	<textarea name="s2.q4.notes"></textarea>
-      </label>
-      <br/>
+	<label>
+	  <input type="radio" name="s2.q4" value="2" />
+	  No 
+	</label>
+	<br/>
+
+	<label>
+	  <input type="radio" name="s2.q4" value="3" />
+	  Unsure 
+	</label>
+	<br/>
+
+	<label>
+	  Notes:<br/>
+	  <textarea name="s2.q4.notes"></textarea>
+	</label>
+	<br/>
+
+      </div>
 
       <p>5) Which of the following steps is your state taking to define the
       habilitative services EHB category?</p>
@@ -1126,7 +1140,7 @@
 	Other state definition:
       </label>
       
-      <input type="text" name="s2.q5.other"/>
+      <input type="text" class="txt" name="s2.q5.other"/>
       <br/>
 
       <label>
@@ -2228,41 +2242,54 @@
 
        <h4>Renewal Strategies</h4>
 
-       <p>1) Has your state adopted any of the strategies below to facilitate
-       continuity of Medicaid and CHIP coverage?</p>
+       <div id="s4q1">
 
-      <label>
-	<input type="radio" name="s4.q1" value="1" />
-	Administrative renewal processes for groups unlikely to change eligibility
-	(children in foster care, TEFRA programs, etc.)
-      </label>
-      <br/>
+	 <p>1) Has your state adopted any of the strategies below to facilitate
+	 continuity of Medicaid and CHIP coverage?</p>
 
-      <label>
-	<input type="radio" name="s4.q1" value="2" />
-	12-month continuous eligibility for adults 
-      </label>
-      <br/>
+        <label>
+          <input type="radio" name="s4.q1" value="1" />
+          Yes (Select all that apply):
+        </label>
+        <br/>
 
-      <label>
-	<input type="radio" name="s4.q1" value="3" />
-	Unsure
-      </label>
-      <br/>
+	<label>
+          <input type="checkbox" class="indented s4q1-sub-input" name="s4.q1.1"
+          disabled="disabled" value="Administrative renewal processes" />
+	  Administrative renewal processes for groups unlikely to change
+	  eligibility (children in foster care, TEFRA programs, etc.)
+	</label>
+	<br/>
 
-      <label>
-	<input type="radio" name="s4.q1" value="4" />
-	Other: 
-      </label>
+	<label>
+          <input type="checkbox" class="indented s4q1-sub-input" name="s4.q1.2"
+          disabled="disabled" value="12-month continuous eligibility" />
+	  12-month continuous eligibility for adults 
+	</label>
+	<br/>
 
-      <input type="text" name="s4.q1.other"/>
-      <br/>
+	<label>
+          <input type="checkbox" class="indented s4q1-sub-input" name="s4.q1.3"
+          id="s4q1-other" disabled="disabled" value="Other" />
+	  Other: 
+	</label>
 
-      <label>
-	Notes:<br/>
-	<textarea name="s4.q1.notes"></textarea>
-      </label>
-      <br/>
+	<input type="text" class="txt" name="s4.q1.other" disabled="disabled"/>
+	<br/>
+
+	<label>
+	  <input type="radio" name="s4.q1" value="2" />
+	  Unsure
+	</label>
+	<br/>
+
+	<label>
+	  Notes:<br/>
+	  <textarea name="s4.q1.notes"></textarea>
+	</label>
+	<br/>
+
+      </div>
 
       <p>2) Is your state engaging stakeholders to help consumers renew their
       coverage in Medicaid, CHIP, and the marketplace?</p>
@@ -2286,7 +2313,7 @@
       <br/>
 
       <label>
-	If yes, please list major stakeholder groups: :<br/>
+	If yes, please list major stakeholder groups:<br/>
 	<textarea name="s4.q2.list"></textarea>
       </label>
       <br/>
@@ -2298,7 +2325,8 @@
       <br/>
 
       <p>3) Has your state developed training for state agency staff to help
-      consumers retain their coverage in Medicaid, CHIP, and the marketplace?</p>
+      consumers retain their coverage in Medicaid, CHIP, and the marketplace?
+      </p>
 
       <label>
 	<input type="radio" name="s4.q3" value="1" />

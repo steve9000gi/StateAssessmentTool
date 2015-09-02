@@ -5,41 +5,68 @@ $(document).ready(function() {
 
   ///////////////////////////////////////////////////////////////////////////// 
   // setCheckBoxes: assumes the following DOM context:
+  //
   // <div id = "divId">
   //   <p>Question?</p>
   //   <label>
-  //     <input type="radio" name="name0" value=1>some text</label>
+  //     <input type="radio" name="name0" value="1"/>
+  //     Yes (Select all that apply):
+  //   </label>
+  //
   //   <label>
-  //     <input type="checkbox" class="indented chkClass" name ="name1"... />
+  //     <input type="checkbox" class="chkClass" name ="name0.1"... /></label>
   //   <label>
-  //     <input type="checkbox" class="indented chkClass" name ="name2"... />
+  //     <input type="checkbox" class="chkClass" name ="name0.2"... /></label>
   //   ...
   //   <label>
-  //     <input type="radio" name="name3" value=1>some text</label>
+  //     <input type="checkbox" class="chkClass" name ="name0.n"... /></label>
+  //
+  //   <label>
+  //     <input type="radio" name="name3" value=1>No or unsure or...</label>
   //   ...
   // </div>
   //
-  // The checkboxes "belong to" "this", the first radio button. Iff that first
-  // radio button is checked are the subsidiary/modifying checkboxes enabled
-  // and only then can they be checked.
+  // The checkboxes expand on ("belong to") the first radio button (strictly,
+  // the radio button with value = 1). Iff that radio button is checked are the
+  // subsidiary/modifying checkboxes enabled and only then can they be checked.
   ///////////////////////////////////////////////////////////////////////////// 
   var setCheckBoxes = function() {
     var chkdRadioSelector = "input[name='" + this.name + "']:checked";
     var divId = "#" + this.parentElement.parentElement.id;
-    var disableChkBoxes = 
-      $(chkdRadioSelector, divId).val() != 1; 
+    var disableChkBoxes = $(chkdRadioSelector, divId).val() != 1; 
     var chkBoxClass = "." +
       this.parentElement.parentElement.children[3].children[0].className
       .split(" ")[1];
     $(chkBoxClass) 
       .attr("disabled", disableChkBoxes) .attr("checked", function() { 
       return this.checked && !disableChkBoxes; }); 
+
+    // Trigger event handler to empty text input associated with a checkbox:
+    $(chkBoxClass).change();
   };
 
   $("#s5q1a input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1b input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1c input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1d input[type=radio]").on("change", setCheckBoxes);
+
+  $("#s2q4 input[type=radio]").on("change", setCheckBoxes);
+  $("#s4q1 input[type=radio]").on("change", setCheckBoxes);
+
+  // Text input is enabled according to whether "this", presumed to be the
+  // associated checkbox, is checked. If unchecked, text is cleared. Affects all
+  // text inputs that share the same grandparent with "this".
+  var setTextEnabling = function() {
+    var textSelector = "#" + this.parentElement.parentElement.id
+      + " input[type=text]";
+    $(textSelector).attr("disabled", !this.checked);
+    if (!this.checked) {
+      $(textSelector)[0].value=""; 
+    }
+  };
+
+  $("#s2q4-other").on("change", setTextEnabling);
+  $("#s4q1-other").on("change", setTextEnabling);
 
   // Warning: modifies its argument.
   var slurpSurveyMetadata = function(survey) {
@@ -82,8 +109,8 @@ $(document).ready(function() {
     };
   };
 
-  // For the subquestions of s5.q1, where the logic is "if yes, then check all
-  // that apply".
+  // For questions s2.q4, s4.q1, and the subquestions of s5.q1, where the logic
+  // is "if yes, then check all that apply".
   var slurpRadioChecks = function(name) {
     var radio = d3.select('input[name="' + name + '"]:checked').node();
     var response = {
@@ -135,7 +162,7 @@ $(document).ready(function() {
       slurpRadio('s2.q2b'),
     ];
     section.questions[2] = slurpRadio('s2.q3');
-    section.questions[3] = slurpRadio('s2.q4');
+    section.questions[3] = slurpRadioChecks('s2.q4');
     section.questions[4] = slurpRadio('s2.q5');
     section.questions[5] = slurpRadio('s2.q6');
     section.questions[6] = slurpRadio('s2.q7');
@@ -168,7 +195,7 @@ $(document).ready(function() {
 
   var slurpSection4 = function() {
     var section = {questions: []};
-    section.questions[0] = slurpRadio('s4.q1');
+    section.questions[0] = slurpRadioChecks('s4.q1');
     section.questions[1] = slurpRadio('s4.q2');
     section.questions[2] = slurpRadio('s4.q3');
     section.questions[3] = slurpRadio('s4.q4');
