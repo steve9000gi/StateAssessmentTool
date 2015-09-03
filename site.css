@@ -102,7 +102,12 @@ footer {
   line-height: 14px;
 }
 
-#btt-box, #back-to-top {
+#home-box, #home-link {
   font-size: 14px;
   text-align: left;
 }
+
+label[disabled], .grayed-out {
+  color: #cccccc;
+}
+

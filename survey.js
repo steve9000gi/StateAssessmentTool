@@ -38,9 +38,8 @@ $(document).ready(function() {
       this.parentElement.parentElement.children[3].children[0].className
       .split(" ")[1];
     $(chkBoxClass) 
-      .attr("disabled", disableChkBoxes) .attr("checked", function() { 
-      return this.checked && !disableChkBoxes; }); 
-
+      .attr("disabled", disableChkBoxes)
+      .attr("checked", function() { return this.checked && !disableChkBoxes; }); 
     // Trigger event handler to empty text input associated with a checkbox:
     $(chkBoxClass).change();
   };
@@ -67,6 +66,38 @@ $(document).ready(function() {
 
   $("#s2q4-other").on("change", setTextEnabling);
   $("#s4q1-other").on("change", setTextEnabling);
+
+  // If the third radio button in s1q1 is selected, disable and clear s1q2.
+  $("input[name='s1.q1']").on("change", function() {
+    var skipNextQuestion = this.value === "3";
+    $("#s1q2div *").attr("disabled", skipNextQuestion);
+    $("#s1q2div").toggleClass("grayed-out", skipNextQuestion);
+    $("#s1q2div input[type=radio]").attr("checked", function() {
+      return this.checked && !skipNextQuestion;
+    });
+    if (skipNextQuestion) {
+      $("[name='s1.q2.notes']")[0].value = "";
+    }
+  });
+
+  // If one of the "Capacity" sets of radio buttons has a value of 0 or 1, then
+  // disable and uncheck the associated "Level of Actitity" radio buttons, and
+  // gray out the labels.
+  var setLevelOfActivityEnabling = function() {
+    var disableLOA = ((this.value ==="0") || (this.value === "1"));
+    var capacityNameArray = this.name.split(".");
+    var loaName = capacityNameArray[0] + "." + capacityNameArray[1] + "."
+      + "activity";
+    var loaP = $(this.parentElement.parentElement.nextElementSibling);
+    $("input[name='" + loaName + "']")
+      .attr("disabled", disableLOA)
+      .attr("checked", function() { return this.checked && !disableLOA; });
+    //$(this.parentElement.parentElement.nextElementSibling).find("label")
+      loaP.toggleClass("grayed-out", disableLOA)
+        .find("label").attr("disabled", disableLOA);
+  };
+
+  $("input[name$='capacity']").on("change", setLevelOfActivityEnabling);
 
   // Warning: modifies its argument.
   var slurpSurveyMetadata = function(survey) {
