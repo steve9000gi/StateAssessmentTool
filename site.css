@@ -107,7 +107,7 @@ footer {
   text-align: left;
 }
 
-label[disabled], .grayed-out {
+.grayed-out {
   color: #cccccc;
 }
 

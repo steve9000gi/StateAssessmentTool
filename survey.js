@@ -32,14 +32,17 @@ $(document).ready(function() {
   ///////////////////////////////////////////////////////////////////////////// 
   var setCheckBoxes = function() {
     var chkdRadioSelector = "input[name='" + this.name + "']:checked";
-    var divId = "#" + this.parentElement.parentElement.id;
-    var disableChkBoxes = $(chkdRadioSelector, divId).val() != 1; 
+    var divId = this.parentElement.parentElement.id;
+    var disableChkBoxes = $(chkdRadioSelector, "#" + divId).val() != 1; 
     var chkBoxClass = "." +
       this.parentElement.parentElement.children[3].children[0].className
       .split(" ")[1];
+    var chkboxLabelSelector = "." + divId + "-chkboxLabel";
     $(chkBoxClass) 
       .attr("disabled", disableChkBoxes)
-      .attr("checked", function() { return this.checked && !disableChkBoxes; }); 
+      .attr("checked", function() { return this.checked && !disableChkBoxes; });
+    $(chkboxLabelSelector).toggleClass("grayed-out", disableChkBoxes);
+
     // Trigger event handler to empty text input associated with a checkbox:
     $(chkBoxClass).change();
   };
@@ -67,7 +70,7 @@ $(document).ready(function() {
   $("#s2q4-other").on("change", setTextEnabling);
   $("#s4q1-other").on("change", setTextEnabling);
 
-  // If the third radio button in s1q1 is selected, disable and clear s1q2.
+  // If the third radio button in s1.q1 is selected, disable and clear s1.q2.
   $("input[name='s1.q1']").on("change", function() {
     var skipNextQuestion = this.value === "3";
     $("#s1q2div *").attr("disabled", skipNextQuestion);
@@ -79,6 +82,25 @@ $(document).ready(function() {
       $("[name='s1.q2.notes']")[0].value = "";
     }
   });
+
+  // For any question with a textarea that needs to be disabled and emptied of
+  // text (and its associated label grayed out) if the answer isn't "yes".
+  // Assumes that the names of that textarea and its label both start with
+  // this.name + ".list".
+  var setTextareaEnabling = function() {
+    console.log("setTextareaEnabling");
+    var disable = this.value !== "1";
+    var textareaSelector = "[name='" + this.name + ".list']";
+    var labelSelector = "#" + this.name + ".list-label";
+    $(textareaSelector).attr("disabled", disable);
+    $(labelSelector).toggleClass("grayed-out", disable);
+    if (disable) {
+      $(textareaSelector)[0].value = "";
+    }
+  };
+
+  $("[name='s1.q5']").on("change", setTextareaEnabling);
+  $("[name='s4.q2']").on("change", setTextareaEnabling);
 
   // If one of the "Capacity" sets of radio buttons has a value of 0 or 1, then
   // disable and uncheck the associated "Level of Actitity" radio buttons, and
@@ -92,9 +114,8 @@ $(document).ready(function() {
     $("input[name='" + loaName + "']")
       .attr("disabled", disableLOA)
       .attr("checked", function() { return this.checked && !disableLOA; });
-    //$(this.parentElement.parentElement.nextElementSibling).find("label")
       loaP.toggleClass("grayed-out", disableLOA)
-        .find("label").attr("disabled", disableLOA);
+        .find("label").toggleClass("grayed-out", disableLOA);
   };
 
   $("input[name$='capacity']").on("change", setLevelOfActivityEnabling);

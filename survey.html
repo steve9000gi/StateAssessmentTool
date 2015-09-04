@@ -14,6 +14,7 @@
   <script type="text/javascript" src="site.js"></script>
   <script type="text/javascript" src="survey.js"></script>
   <div id="main-page">
+
     <a href="home.html"><img src="NMCHWDC-gray.png" alt="NMCHWDC logo"></a>
     <br/><br/>
     <header>
@@ -353,31 +354,33 @@
       <br/>
 
       <div id="s1q2div">
-      <p>2) If your state is implementing Medicaid expansion or debating
-      implementation, what model is it using?</p>
 
-      <label>
-	<input type="radio" name="s1.q2" value="1" />
-	Expanding eligibility of current program to 138% FPL
-      </label>
-      <br/>
+	<p>2) If your state is implementing Medicaid expansion or debating
+	implementation, what model is it using?</p>
 
-      <label>
-	<input type="radio" name="s1.q2" value="2" />
-	Using federal funds for premium assistance for marketplace coverage
-      </label>
-      <br/>
+	<label>
+	  <input type="radio" name="s1.q2" value="1" />
+	  Expanding eligibility of current program to 138% FPL
+	</label>
+	<br/>
 
-      <label>
-	<input type="radio" name="s1.q2" value="3" />
-	Unsure
-      </label>
-      <br/>
+	<label>
+	  <input type="radio" name="s1.q2" value="2" />
+	  Using federal funds for premium assistance for marketplace coverage
+	</label>
+	<br/>
 
-      <label>
-	Notes:<br/>
-	<textarea name="s1.q2.notes"></textarea>
-      </label>
+	<label>
+	  <input type="radio" name="s1.q2" value="3" />
+	  Unsure
+	</label>
+	<br/>
+
+	<label>
+	  Notes:<br/>
+	  <textarea name="s1.q2.notes"></textarea>
+	</label>
+
       </div>
       <br/>
       <br/>
@@ -474,9 +477,9 @@
       </label>
       <br/>
 
-      <label>
+      <label id="s1.q5.list-label">
 	If yes, please list specific partners:<br/>
-	<textarea name="s1.q5.list"></textarea>
+	<textarea name="s1.q5.list" disabled="disabled"></textarea>
       </label>
       <br/>
 
@@ -1043,38 +1046,38 @@
       <br/>
 
       <div id="s2q4">
-
+	
   	<P>4) Has your state adopted any strategies to ensure children receive
 	dental benefits?</p>
 
-	<label>
+        <label>
 	  <input type="radio" name="s2.q4" value="1"/>
 	  Yes (Select all that apply):
 	</label>
 	<br/>
 
-	<label>
+	<label class="s2q4-chkboxLabel">
 	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.1"
 	  disabled="disabled" value="Purchase stand-alone dental plans" />
 	  Requiring purchase of stand-alone dental plans for children
 	</label>
 	<br/>
 
-	<label>
+	<label class="s2q4-chkboxLabel">
 	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.2"
 	  disabled="disabled" value="Embed dental benefits" />
 	  Encouraging issuers to embed dental benefits in medical health plans
 	</label>
 	<br/>
 
-	<label>
+	<label class="s2q4-chkboxLabel">
 	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.3"
 	  disabled="disabled" value="More affordable coverage" />
 	  Making dental coverage more affordable
 	</label>
 	<br/>
 
-	<label>
+	<label class="s2q4-chkboxLabel">
 	  <input type="checkbox" class="indented s2q4-sub-input" name="s2.q4.4"
 	  id="s2q4-other" disabled="disabled" value="Other"/>
 	  Other: 
@@ -2230,7 +2233,7 @@
         </label>
         <br/>
 
-	<label>
+	<label class="s4q1-chkboxLabel">
           <input type="checkbox" class="indented s4q1-sub-input" name="s4.q1.1"
           disabled="disabled" value="Administrative renewal processes" />
 	  Administrative renewal processes for groups unlikely to change
@@ -2238,14 +2241,14 @@
 	</label>
 	<br/>
 
-	<label>
+	<label class="s4q1-chkboxLabel">
           <input type="checkbox" class="indented s4q1-sub-input" name="s4.q1.2"
           disabled="disabled" value="12-month continuous eligibility" />
 	  12-month continuous eligibility for adults 
 	</label>
 	<br/>
 
-	<label>
+	<label class="s4q1-chkboxLabel">
           <input type="checkbox" class="indented s4q1-sub-input" name="s4.q1.3"
           id="s4q1-other" disabled="disabled" value="Other" />
 	  Other: 
@@ -2289,9 +2292,9 @@
       </label>
       <br/>
 
-      <label>
+      <label id="s4.q2.list-label">
 	If yes, please list major stakeholder groups:<br/>
-	<textarea name="s4.q2.list"></textarea>
+	<textarea name="s4.q2.list" disabled="disabled"></textarea>
       </label>
       <br/>
 
@@ -2913,28 +2916,28 @@
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1a-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.1"
 	  disabled="disabled" value="Medicaid Director" />
 	  Medicaid Director
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1a-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.2"
 	  disabled="disabled" value="Medicaid EPSDT staff" />
 	  Medicaid EPSDT staff
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1a-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.3"
 	  disabled="disabled" value="Medicaid eligibility staff" />
 	  Medicaid eligibility staff
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1a-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1a-chkbox" name="s5.q1a.4"
 	  disabled="disabled" value="Medicaid managed care staff" />
 	  Medicaid managed care staff
@@ -2976,14 +2979,14 @@
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1b-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1b-chkbox" name="s5.q1b.1"
 	  disabled="disabled" value="CHIP Director" />
 	  CHIP Director
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1b-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1b-chkbox" name="s5.q1b.2"
 	  disabled="disabled" value="CHIP staff" />
 	  CHIP staff
@@ -3021,16 +3024,16 @@
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1c-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1c-chkbox" name="s5.q1c.1"
 	  disabled="disabled" value="Marketplace Director" />
 	  Marketplace Director
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1c-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1c-chkbox" name="s5.q1c.2"
-	  disabled="disabled" value="Marketplace outreach and enrollment contact" />
+	  disabled="disabled" value="Marketplace outreach/enrollment contact"/>
 	  Marketplace outreach and enrollment contact
 	</label>
 	<br/>
@@ -3067,14 +3070,14 @@
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1d-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1d-chkbox" name="s5.q1d.1"
 	  disabled="disabled" value="Health insurance commissioner" />
 	  Health insurance commissioner
 	</label>
 	<br/>
 
-	<label>
+	<label class="s5q1d-chkboxLabel">
 	  <input type="checkbox" class="indented s5q1d-chkbox" name="s5.q1d.2"
 	  disabled="disabled" value="Ombudsman" />
 	  Ombudsman
@@ -3624,6 +3627,7 @@
       <span class="stretch"></span>
 
     </div>
+
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
