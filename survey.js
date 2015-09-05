@@ -51,7 +51,6 @@ $(document).ready(function() {
   $("#s5q1b input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1c input[type=radio]").on("change", setCheckBoxes);
   $("#s5q1d input[type=radio]").on("change", setCheckBoxes);
-
   $("#s2q4 input[type=radio]").on("change", setCheckBoxes);
   $("#s4q1 input[type=radio]").on("change", setCheckBoxes);
 
@@ -84,19 +83,19 @@ $(document).ready(function() {
   });
 
   // For any question with a textarea that needs to be disabled and emptied of
-  // text (and its associated label grayed out) if the answer isn't "yes".
-  // Assumes that the names of that textarea and its label both start with
-  // this.name + ".list".
+  // text (and its associated label[s] grayed out) if the answer isn't "yes".
+  // Assumptions: grandparent has an id, label associated with textarea to be
+  // conditionally disabled is of class="list-label".
   var setTextareaEnabling = function() {
-    console.log("setTextareaEnabling");
     var disable = this.value !== "1";
     var textareaSelector = "[name='" + this.name + ".list']";
-    var labelSelector = "#" + this.name + ".list-label";
+    var labelSelector = "#" + this.parentElement.parentElement.id
+      + " .list-label";
     $(textareaSelector).attr("disabled", disable);
-    $(labelSelector).toggleClass("grayed-out", disable);
     if (disable) {
       $(textareaSelector)[0].value = "";
     }
+    $(labelSelector).toggleClass("grayed-out", disable);
   };
 
   $("[name='s1.q5']").on("change", setTextareaEnabling);
