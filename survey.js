@@ -62,12 +62,29 @@ $(document).ready(function() {
       + " input[type=text]";
     $(textSelector).attr("disabled", !this.checked);
     if (!this.checked) {
-      $(textSelector)[0].value=""; 
+      $(textSelector)[0].value = ""; 
     }
   };
 
   $("#s2q4-other").on("change", setTextEnabling);
   $("#s4q1-other").on("change", setTextEnabling);
+
+  // Similar to setTextEnabling() except that "this" is assumed to be a radio
+  // button rather than a checkbox. Radio buttons come in mutually exclusive
+  // groups, unlike checkboxes, so the boolean for determining whether the text
+  // input should be disabled must necessarily be "is 'this' the radio button
+  // with the associated text?" rather than "is 'this' checked?": can't make 
+  // setTextEnabling() the onchange event handler for a radio button because in 
+  // such an arrangement this.checked always === true. Might there be a way to 
+  // resolve this using the closure for a wrapper function?
+  $("#s2q5div input[type=radio").on("change", function(e) {
+    var textSelector = "#" + this.parentElement.parentElement.id
+      + " input[type=text]";
+    $(textSelector).attr("disabled", this.value !== "5");
+    if (this.value !== "5") {
+      $(textSelector)[0].value = ""; 
+    }
+  });
 
   // If the third radio button in s1.q1 is selected, disable and clear s1.q2.
   $("input[name='s1.q1']").on("change", function() {
