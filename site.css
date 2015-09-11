@@ -80,10 +80,11 @@ footer {
   text-justify: distribute-all-lines;
 }
 
-.box {
-  width: 150px;
+#footer-div div {
+  width: 275px;
   height: 26px;
   vertical-align: top;
+  text-align: center;
   display: inline-block;
   *display: inline;
   zoom: 1;
@@ -102,12 +103,42 @@ footer {
   line-height: 14px;
 }
 
-#home-box, #home-link {
+#navigation-box * {
   font-size: 14px;
-  text-align: left;
 }
 
 .grayed-out {
   color: #cccccc;
 }
 
+.hideable {
+  display: none;
+}
+
+#contents {
+  display: block;
+}
+
+#logout-link {
+  margin-right: 0.3em;
+  float: right;
+}
+
+#contents a, #footer-div a {
+  color: #1a0dab;
+}
+
+#contents a {
+  text-decoration: underline;
+}
+
+#contents a:hover, #footer-div a:hover {
+  color: #660099;
+  text-decoration: underline;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.selected {
+  color: #ff0000 !important;
+}

@@ -13,26 +13,37 @@
 <body>
   <script type="text/javascript" src="site.js"></script>
   <script type="text/javascript" src="survey.js"></script>
-  <div id="main-page">
 
-    <a href="home.html"><img src="NMCHWDC-gray.png" alt="NMCHWDC logo"></a>
+  <div id="main-page">
+    <a href="home.html" id="logo"><img src="NMCHWDC-gray.png" alt="NMCHWDC logo"></a>
     <br/><br/>
     <header>
-      <h1>State Title V Roles in Health Reforms including the Affordable Care Act:
-      <br/>A Title V State Access to Care Assessment Tool</h1>
+      <h1>
+        State Title V Roles in Health Reforms including the Affordable Care Act:
+        <br/>A Title V State Access to Care Assessment Tool
+      </h1>
     </header>
 
-    <nav id="top">
-      <a href="#main">Overview</a><br/>
-      <a href="#section1">Section 1: Eligibility and Enrollment</a><br/>
-      <a href="#section2">Section 2: Coverage and Insurance Benefits</a><br/>
-      <a href="#section3">Section 3: Provider Networks and Network Adequacy</a><br/>
-      <a href="#section4">Section 4: Continuity of Care</a><br/>
-      <a href="#section5">Section 5: Partnerships</a>
+    <nav id="contents" class="hideable">
+      <a title="overview">
+        Overview</a><br/>
+      <a title="section0">
+        Section 0: General Information</a><br/>
+      <a title="section1">
+        Section 1: Eligibility and Enrollment</a><br/>
+      <a title="section2">
+        Section 2: Coverage and Insurance Benefits</a><br/>
+      <a title="section3">
+        Section 3: Provider Networks and Network Adequacy</a><br/>
+      <a title="section4">
+        Section 4: Continuity of Care</a><br/>
+      <a title="section5">
+        Section 5: Partnerships</a>
+      <br/><br/><br/><br/>
     </nav>
 
-    <main id="main">
-      <h2>OVERVIEW</h2>
+    <main id="overview" class="hideable">
+      <h2><u>OVERVIEW</u></h2>
       <h3>Purpose of the State Assessment Tool</h3>
 
       <p>The Affordable Care Act (ACA) and other health reforms in states
@@ -62,11 +73,11 @@
       in five areas:</p>
 
       <ol>
-	<li>Eligibility and Enrollment</li>
-	<li>Coverage and Insurance Benefits</li>
-	<li>Provider Networks and Network Adequacy</li>
-	<li>Continuity of Care, and</li>
-	<li>Partnerships between Title V, Medicaid, CHIP, Marketplaces and other key stakeholders.</li>
+        <li>Eligibility and Enrollment</li>
+        <li>Coverage and Insurance Benefits</li>
+        <li>Provider Networks and Network Adequacy</li>
+        <li>Continuity of Care, and</li>
+        <li>Partnerships between Title V, Medicaid, CHIP, Marketplaces and other key stakeholders.</li>
       </ol>
 
       <h3>How to complete the tool</h3>
@@ -74,8 +85,8 @@
       <p>Each section of the tool asks two types of questions:</p>
 
       <ol>
-	<li>
-	  The first set of questions is designed to assess a Title V program’s
+        <li>
+          The first set of questions is designed to assess a Title V program’s
 	  awareness of contemporary health reform activities. This section will
 	  help Title V map the landscape of health transformation in the state.
 	  A list of resource links at the end of each section may help you find
@@ -192,18 +203,13 @@
       <a href="mailto:kwitgert@nashp.org?subject=State%20Assessment%20Tool">
 	kwitgert@nashp.org
       </a>.</p>
-
+      <br/><br/><br/><br/>
     </main>
 
     <p style="page-break-after:always;"></p>
 
-    <section id="metadata">
-      <img src="NMCHWDC-gray.png" alt="NMCHWDC logo">
-      <br/><br/>
-
-      <h2>State Title V Roles in Health Reforms including the Affordable Care
-	Act <br/>TITLE V STATE ACCESS TO CARE ASSESSMENT TOOL</h2>
-
+    <section id="section0" class="hideable">
+      <h2><u>0. General Information</u></h2>
       <label class="meta-label"><strong>Date:</strong></label>
       <input id="date" type="date" class="leftAlign" name="date" />
       <br/>
@@ -300,10 +306,10 @@
       <label>Name: <input type="text" class="txt" name="name5"/></label>
       <label>Affiliation: <input type="text" class="txt" name="affiliation5"/>
       </label>
-      <br/>
+      <br/><br/><br/><br/>
     </section>
 
-    <section id="section1">
+    <section id="section1" class="hideable">
 	<h2><u>1. Eligibility and Enrollment</u></h2>
 
       <p>While adults, including women of reproductive age and parents, are a
@@ -354,7 +360,6 @@
       <br/>
 
       <div id="s1q2div">
-
 	<p>2) If your state is implementing Medicaid expansion or debating
 	implementation, what model is it using?</p>
 
@@ -380,10 +385,8 @@
 	  Notes:<br/>
 	  <textarea name="s1.q2.notes"></textarea>
 	</label>
-
       </div>
-      <br/>
-      <br/>
+      <br/><br/>
 
       <p>3) Is your state pursuing other options, such as a waiver, to expand
       coverage for adults, particularly women of childbearing age?</p>
@@ -456,7 +459,6 @@
       <h4>Consumer Assistance</h4>
 
       <div id="s1q5div">
-
 	<p>5) Are any Title V local health departments or partners in your state
 	recognized as Navigators, Certified Application Counselors, or In-Person
 	assisters?</p>
@@ -490,7 +492,6 @@
 	  <textarea name="s1.q5.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <p>6) Does your state require additional training, certification, or
@@ -891,10 +892,10 @@
 	Notes:<br/>
 	<textarea name="s1.followup.notes"></textarea>
       </label>
-      <br/>
+      <br/><br/><br/><br/>
     </section>
 
-    <section id="section2">
+    <section id="section2" class="hideable">
 	<h2><u>2. Coverage and Insurance Benefits</u></h2>
 
       <p>The ACA expands public and private insurance coverage to populations
@@ -1050,7 +1051,6 @@
       <br/>
 
       <div id="s2q4">
-	
   	<P>4) Has your state adopted any strategies to ensure children receive
 	dental benefits?</p>
 
@@ -1107,11 +1107,9 @@
 	  <textarea name="s2.q4.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <div id="s2q5div">
-
 	<p>5) Which of the following steps is your state taking to define the
 	habilitative services EHB category?</p>
 
@@ -1153,7 +1151,6 @@
 	  <textarea name="s2.q5.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
   
       <h4>Benefits for Specific Populations</h4>
@@ -1614,10 +1611,10 @@
 	Notes:<br/>
 	<textarea name="s2.followup.notes"></textarea>
       </label>
-      <br/>
+      <br/><br/><br/><br/>
     </section>
 
-    <section id="section3">
+    <section id="section3" class="hideable">
        <h2><u>3. Provider Networks and Network Adequacy</u></h2>
 
        <p>The ACA sets network adequacy standards for qualified health plans
@@ -2206,10 +2203,10 @@
 	Notes:<br/>
 	<textarea name="s3.followup.notes"></textarea>
       </label>
-      <br/>
+      <br/><br/><br/><br/>
     </section>
 
-    <section id="section4">
+    <section id="section4" class="hideable">
        <h2><u>4. Continuity of Care</u></h2>
 
        <p>As individuals’ life circumstances, including income and family
@@ -2232,7 +2229,6 @@
        <h4>Renewal Strategies</h4>
 
        <div id="s4q1">
-
 	 <p>1) Has your state adopted any of the strategies below to facilitate
 	 continuity of Medicaid and CHIP coverage?</p>
 
@@ -2277,11 +2273,9 @@
 	  <textarea name="s4.q1.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <div id="s4q2div">
-	  
 	<p>2) Is your state engaging stakeholders to help consumers renew their
 	coverage in Medicaid, CHIP, and the marketplace?</p>
 
@@ -2315,7 +2309,6 @@
 	  <textarea name="s4.q2.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <p>3) Has your state developed training for state agency staff to help
@@ -2889,11 +2882,11 @@
 	Notes:<br/>
 	<textarea name="s4.followup.notes"></textarea>
       </label>
-      <br/>
+      <br/><br/><br/><br/>
     </section>
 
-    <section id="section5">
-	<h2><u>5. Partnerships between Title V, Medicaid, CHIP, and Other Key Stakeholders</u></h2>
+    <section id="section5" class="hideable">
+      <h2><u>5. Partnerships between Title V, Medicaid, CHIP, and Other Key Stakeholders</u></h2>
 
       <p>Public health entities—such as state and local government agencies
       and non-profit and community-based organizations—can be important and
@@ -2920,7 +2913,6 @@
 
 
       <div id="s5q1a" class="indented">
-
 	<p>a. Medicaid director and staff responsible for EPSDT,
 	eligibility, and managed care in Medicaid?</p>
 
@@ -2980,11 +2972,9 @@
 	  <textarea name="s5.q1a.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <div id="s5q1b" class="indented">
-
 	<p>b. CHIP director and/or staff?</p>
 
 	<label>
@@ -3025,11 +3015,9 @@
 	  <textarea name="s5.q1b.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <div id="s5q1c" class="indented">
-
 	<p>c. Marketplace director and outreach and enrollment contacts?</p>
 
 	<label>
@@ -3070,11 +3058,9 @@
 	  <textarea name="s5.q1c.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <div id="s5q1d" class="indented">
-
 	<p>d. Health insurance division commissioner and Ombudsman or person in
 	charge of grievances/appeals?</p>
 
@@ -3116,7 +3102,6 @@
 	  <textarea name="s5.q1d.notes"></textarea>
 	</label>
 	<br/>
-
       </div>
 
       <p>2) Are there regular interagency or advisory group meetings related to
@@ -3623,25 +3608,33 @@
 
   <footer>
     <div id=footer-div>
-
-      <div class="box"></div>
-      <div class="box" id="home-box">
-	<a id="home-link" href="#">Home</a>
+      <div class="box" id="navigation-box">
+        <a id="prev" class="relative-link">&lt;prev</a> 
+        <a class="selected" title="contents">Contents</a>
+        <a title="overview">Overview</a>
+        <a title="section0">0</a>
+        <a title="section1">1</a>
+        <a title="section2">2</a>
+        <a title="section3">3</a>
+        <a title="section4">4</a>
+        <a title="section5">5</a>
+        <a id="next" class="relative-link">next&gt;</a>
       </div>
 
       <div class="box">
-	<button type="submit" id="submit">Save</button>
+        <a id="single-page">View as single page</a>
       </div>
 
       <div class="box">
-        <a id="logout-link" href="">Logout</a>
+        <button type="submit" id="submit">Save</button>
       </div>
 
-      <div class="box"></div>
+      <div class="box">
+        <a id="logout-link" href="">Log out</a>
+      </div>
+
       <span class="stretch"></span>
-
     </div>
-
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
@@ -3652,4 +3645,3 @@
   </script>
 </body>
 </html>
-

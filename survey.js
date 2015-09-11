@@ -130,11 +130,99 @@ $(document).ready(function() {
     $("input[name='" + loaName + "']")
       .attr("disabled", disableLOA)
       .attr("checked", function() { return this.checked && !disableLOA; });
-      loaP.toggleClass("grayed-out", disableLOA)
-        .find("label").toggleClass("grayed-out", disableLOA);
+    loaP.toggleClass("grayed-out", disableLOA).find("label")
+      .toggleClass("grayed-out", disableLOA);
   };
 
   $("input[name$='capacity']").on("change", setLevelOfActivityEnabling);
+
+  // No tooltips for anchors:
+  $("a").hover(
+    function () {
+      $(this).data("title", $(this).attr("title"));
+      $(this).removeAttr("title");
+    },
+    function () {
+      $(this).attr("title", $(this).data("title"));
+    }
+  );
+
+  $("a").click(function() {
+    $(this).attr("title", $(this).data("title"));
+  });
+
+  var getVisibleSection = function() {
+    return $(".hideable").filter(function() {
+      return $(this).css("display") === "block";
+    });
+  };
+
+  var showSelectedSection = function(selected) {
+    $(".hideable").hide();
+    $("#logo")[0].scrollIntoView();
+    $("#navigation-box a").removeClass("selected");
+    $(selected).show();
+  };
+
+  $("#prev").click(function() {
+    var current = $(getVisibleSection())[0].id;
+    if (current !== "contents") {
+      var next = (current === "overview")
+               ? "#contents"
+               : ((current === "section0") ? "#overview"
+                                           : "#section" + (+current[7] - 1));
+      showSelectedSection(next);
+      var selectedTitle;
+      switch (current) {
+	case "overview":
+	  selectedTitle = "contents";
+	  break;
+	case "section0":
+	  selectedTitle = "overview";
+	  break;
+	default:
+	  selectedTitle = "section" + (+current[7] - 1);
+      };
+      var selectedA = "#navigation-box a[title='" + selectedTitle + "']";
+      $(selectedA).addClass("selected");
+    }
+  });
+
+  $("#next").click(function() {
+    var current = $(getVisibleSection())[0].id;
+    if (current !== "section5") {
+      var next = (current === "contents")
+               ? "#overview"
+               : ((current === "overview") ? "#section0"
+                                           : "#section" + (+current[7] + 1));
+      showSelectedSection(next);
+      var selectedTitle;
+      switch (current) {
+	case "contents":
+	  selectedTitle = "overview";
+	  break;
+	case "overview":
+	  selectedTitle = "section0";
+	  break;
+	default:
+	  selectedTitle = "section" + (+current[7] + 1);
+      };
+      var selectedA = "#navigation-box a[title='" + selectedTitle + "']";
+      $(selectedA).addClass("selected");
+    }
+  });
+
+  $("#contents a, #navigation-box a[class!='relative-link']").click(function() {
+    showSelectedSection("#" + this.title);
+    var selectedA = "#navigation-box a[title='" + this.title + "']";
+    $(selectedA).addClass("selected");
+  });
+
+  $("#single-page").click(function() {
+    $(".hideable").show();
+    $("#logo")[0].scrollIntoView();
+    $("#navigation-box a").removeClass("selected");
+  });
 
   // Warning: modifies its argument.
   var slurpSurveyMetadata = function(survey) {
@@ -525,7 +613,7 @@ $(document).ready(function() {
             // alert('Error talking to backend server.')
           })
           .on('load', function(data) {
-            console.log('survey ' + id + ' saved');
+            alert('survey ' + id + ' saved');
           })
           .send('PUT', JSON.stringify(slurpSurvey()));
       });
