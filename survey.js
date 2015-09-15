@@ -70,11 +70,12 @@ $(document).ready(function() {
   $("#s4q1-other").on("change", setTextEnabling);
 
   // Similar to setTextEnabling() except that "this" is assumed to be a radio
-  // button rather than a checkbox. Radio buttons come in mutually exclusive
-  // groups, unlike checkboxes, so the boolean for determining whether the text
-  // input should be disabled must necessarily be "is 'this' the radio button
-  // with the associated text?" rather than "is 'this' checked?": can't make 
-  // setTextEnabling() the onchange event handler for a radio button because in 
+  // button rather than a checkbox. Radio buttons tend to come in groups wherein
+  // the selection of individual inputs, unlike that of checkboxes, is mutually
+  // exclusive, so the boolean for determining whether the text input should be
+  // disabled must necessarily be "is 'this' the radio button with the
+  // associated text?" rather than "is 'this' checked?": so we can't make 
+  // setTextEnabling() the onchange event handler for a radio button, because in
   // such an arrangement this.checked always === true. Might there be a way to 
   // resolve this using the closure for a wrapper function?
   $("#s2q5div input[type=radio").on("change", function(e) {
@@ -136,7 +137,7 @@ $(document).ready(function() {
 
   $("input[name$='capacity']").on("change", setLevelOfActivityEnabling);
 
-  // No tooltips for anchors:
+  // Turn off tooltips for anchors:
   $("a").hover(
     function () {
       $(this).data("title", $(this).attr("title"));
@@ -222,6 +223,10 @@ $(document).ready(function() {
     $(".hideable").show();
     $("#logo")[0].scrollIntoView();
     $("#navigation-box a").removeClass("selected");
+  });
+
+  $("#instructions-button").click(function() {
+    window.open("instructions.html","_blank");
   });
 
   // Warning: modifies its argument.

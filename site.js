@@ -27,15 +27,15 @@ $(document).ready(function() {
       .append('form')
       .html('<label>' +
             '  Email address:' +
-            '  <input type="text" name="email" />' +
             '</label>' +
+            '  <input type="text" name="email" />' +
             '<br />' +
             '<label>' +
             '  Password:' +
-            '  <input type="password" name="password" />' +
             '</label>' +
+            '  <input type="password" name="password" />' +
             '<br />' +
-            '<input type="submit" name="Login" />');
+            '<input type="submit" name="Log in" />');
     var message = container
       .append('p')
       .attr('class', 'message');
@@ -113,7 +113,7 @@ $(document).ready(function() {
 
     var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
     var columns =
-      ['Map ID', 'Created At', 'Modified At', 'Download'];
+      ['ID', 'Created At', 'Modified At', 'Download'];
     if (asAdmin) {
       columns.push('Owner Email');
     }
@@ -176,7 +176,7 @@ $(document).ready(function() {
         message.text('');
         message.append('a')
           .attr('href', 'spreadsheet-notes.html')
-          .text('(Help with downloaded surveys)');
+          .text('Help with downloaded surveys');
         renderSurveyList(surveyListSelector, result)
       })
       .send('GET');

@@ -11,7 +11,7 @@ h1, h2, .ctr {
   text-align: center;
 }
 
-.meta-label {
+.meta-label, #login label {
   display: inline-block;
   float: left;
   clear: left;
@@ -19,7 +19,11 @@ h1, h2, .ctr {
   text-align: left;
 }
 
-.leftAlign {
+#login label {
+  width: 110px;
+}
+
+.leftAlign, #login input[type="text",type="password"] {
   display: inline-block;
   float: left;
 }
@@ -59,20 +63,20 @@ html, body {
 
 #main-page {
   min-height: 100%;
-  margin-bottom: -26px; /* equal to -footer height */
+  margin-bottom: -27px; /* equal to -footer height */
 }
 
 footer {
   background: #eeeeee;
   position: fixed;
-  height: 26px;
+  height: 27px;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
 #footer-div {
-  height: 26px;
+  height: 27px;
   border-style: groove;
   vertical-align: middle;
   text-align: justify;
@@ -81,13 +85,17 @@ footer {
 }
 
 #footer-div div {
-  width: 275px;
-  height: 26px;
+  width: 130px;
+  height: 27px;
   vertical-align: top;
   text-align: center;
   display: inline-block;
   *display: inline;
   zoom: 1;
+}
+
+#footer-div a {
+  vertical-align: -2px;
 }
 
 .stretch {
@@ -97,13 +105,14 @@ footer {
   line-height: 0;
 }
 
-#submit {
-  font-size: 12px;
+#footer-div button {
+  font-size: 14px;
   background: #aaffaa;
   line-height: 14px;
 }
 
-#navigation-box * {
+#navigation-box {
+  width: 275px !important;
   font-size: 14px;
 }
 
@@ -117,11 +126,6 @@ footer {
 
 #contents {
   display: block;
-}
-
-#logout-link {
-  margin-right: 0.3em;
-  float: right;
 }
 
 #contents a, #footer-div a {
@@ -142,3 +146,9 @@ footer {
 .selected {
   color: #ff0000 !important;
 }
+
+td {
+  text-align: right;
+  border: solid #eeeeee 1px;
+}
+
