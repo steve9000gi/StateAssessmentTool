@@ -279,9 +279,11 @@ $(document).ready(function() {
       notes: d3.select('textarea[name="' + name + '.notes"]').node().value
     };
     var checks = [];
-    d3.selectAll('input[name^="' + name + '."]')
+    d3.selectAll('input[name^="' + name + '."][type="checkbox"]')
       .each(function(d,i) { checks.push(this.checked) })
     response.checks = checks;
+    var textNode = d3.select('input[name="' + name + '.other"]').node();
+    if (textNode) response.otherText = textNode.value;
     return response;
   };
 
@@ -459,6 +461,9 @@ $(document).ready(function() {
       document.getElementsByName(name + '.' + i)[0].checked =
         question.checks[i-1];
     }
+    if (question.hasOwnProperty('otherText')) {
+      document.getElementsByName(name + '.other')[0].value = question.otherText;
+    }
   };
 
   var applyCLOA = function(question, name) {
@@ -498,7 +503,7 @@ $(document).ready(function() {
     applyRadio(section.questions[1][0], 's2.q2a');
     applyRadio(section.questions[1][1], 's2.q2b');
     applyRadio(section.questions[2], 's2.q3');
-    applyRadio(section.questions[3], 's2.q4');
+    applyRadioChecks(section.questions[3], 's2.q4');
     applyRadio(section.questions[4], 's2.q5');
     applyRadio(section.questions[5], 's2.q6');
     applyRadio(section.questions[6], 's2.q7');
@@ -527,7 +532,7 @@ $(document).ready(function() {
   };
 
   var applySection4 = function(section) {
-    applyRadio(section.questions[0], 's4.q1');
+    applyRadioChecks(section.questions[0], 's4.q1');
     applyRadio(section.questions[1], 's4.q2');
     applyRadio(section.questions[2], 's4.q3');
     applyRadio(section.questions[3], 's4.q4');
