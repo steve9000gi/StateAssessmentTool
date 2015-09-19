@@ -78,7 +78,7 @@ $(document).ready(function() {
   // setTextEnabling() the onchange event handler for a radio button, because in
   // such an arrangement this.checked always === true. Might there be a way to 
   // resolve this using the closure for a wrapper function?
-  $("#s2q5div input[type=radio").on("change", function(e) {
+  $("#s2q5div input[type=radio]").on("change", function(e) {
     var textSelector = "#" + this.parentElement.parentElement.id
       + " input[type=text]";
     $(textSelector).attr("disabled", this.value !== "5");
