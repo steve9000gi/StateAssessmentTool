@@ -65,7 +65,7 @@
     (if current-user-id
       (survey/list current-user-id)
       (resp/forbidden {:message "not authenticated"})))
-  (GET "/survey/:id.tsv" {:keys [current-user-id] {survey-id :id} :params}
+  (GET "/survey/:id.csv" {:keys [current-user-id] {survey-id :id} :params}
     (if current-user-id
       (survey/fetch-tsv current-user-id survey-id)
       (resp/forbidden {:message "not authenticated"})))

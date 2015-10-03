@@ -146,7 +146,7 @@ $(document).ready(function() {
     rows.append('td')
       .append('a')
       .attr('href', function(d) {
-        return backendBase + '/survey/' + d.id + '.tsv';
+        return backendBase + '/survey/' + d.id + '.csv';
       })
       .text('download')
 
