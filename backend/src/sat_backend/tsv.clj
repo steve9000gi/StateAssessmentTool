@@ -1,7 +1,8 @@
 (ns sat-backend.tsv
   (:require
     [clojure-csv.core :refer [write-csv]]
-    [sat-backend.user :refer [get-email]]))
+    [sat-backend.user :refer [get-email]]
+    [clojure.string :as str]))
 
 ;; Note: use `:force-quote true` when calling write-csv
 
@@ -96,11 +97,30 @@
           (apply conj [sec-num q-num] (flatten-question q-map)))
         questions))
 
+(defn escape-newlines
+  [questions]
+  {:pre [(sequential? questions)
+         (every? (fn [q]
+                   (or (map? q)
+                       (and (vector? q)
+                            (every? map? q))))
+               questions)]}
+  (letfn [(escape-text [text]
+            (str/replace text #"\n" (str/re-quote-replacement "\\n")))
+          (escape-text-at-key [map key]
+            (when (contains? map key)
+              (update-in map [key] escape-text)))]
+    (mapv (fn [question]
+            (escape-text-at-key question "listText")
+            (escape-text-at-key question "notes"))
+          questions)))
+
 (defn prep-tsv
   [survey]
   (let [doc (:document survey)
         sections (->> (get doc "sections")
                       (map #(get % "questions"))
+                      (map escape-newlines)
                       (map assign-question-numbers)
                       (map-indexed assign-section-numbers)
                       (map flatten-questions)
