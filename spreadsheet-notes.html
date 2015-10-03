@@ -46,7 +46,7 @@
             <dd>Multiple answers are possible, as in, &quot;check all that apply&quot;. Columns F on contain a 1 if the corresponding answer was checked, and a 0 otherwise.</dd>
 
             <dt>selectOneThenSelectMany</dt>
-            <dd>Some questions, like Section 5 Question 1a, are fundamentally a &quot;selectOne&quot; question, but there are additional checkboxes under one of the answers. Column F contains the primary answer as in the &quot;selectOne&quot; question type, and the following columns contain the sub-answers as in the &quot;selectMany&quot; question type. Note that sub-answers are only possible if the first primary answer is selected, so all of the values after Column F will be 0 unless Column F is 1.</dd>
+            <dd>Some questions, like Section 5 Question 1a, are fundamentally a &quot;selectOne&quot; question, but there are additional checkboxes under one of the answers. As with the &quot;selectOne&quot; question type, Column F contains the primary answer and Column G contains any &quot;other&quot; text. The following columns contain the sub-answers as in the &quot;selectMany&quot; question type. Note that sub-answers are only possible if the first primary answer is selected, so all of the values after Column G will be 0 unless Column F is 1.</dd>
 
             <dt>CLOA</dt>
             <dd>This is a &quot;Capacity and Level of Activity&quot; question, like in Section 1, Question 7. Column F is the Capacity from 0-5, and Column G is the Level of Activity from 0-5, which may be blank if the user did not select a Level of Activity.</dd>

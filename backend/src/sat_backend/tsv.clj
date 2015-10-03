@@ -75,9 +75,10 @@
   ["CLOA" (or listText "") notes capacity activity])
 
 (defmethod flatten-question :radio-checks
-  [{:strs [radio checks notes listText]}]
+  [{:strs [radio checks notes listText otherText]}]
   (apply conj
-         ["selectOneThenSelectMany" (or listText "") notes (or radio "_")]
+         ["selectOneThenSelectMany" (or listText "") notes (or radio "_")
+          (or otherText "")]
          (checks->strs checks)))
 
 (defmethod flatten-question :radio
