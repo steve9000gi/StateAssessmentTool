@@ -7,7 +7,7 @@
     [ring.middleware.cookies :refer [wrap-cookies]]
     [ring.middleware.format :refer [wrap-restful-format]]
     [ring.middleware.cors :as cors]
-    [compojure.core :refer [defroutes GET POST PUT]]
+    [compojure.core :refer [defroutes DELETE GET POST PUT]]
     [reloaded.repl :refer [system]]
     [sat-backend.user :as user]
     [sat-backend.survey :as survey]
@@ -76,6 +76,10 @@
   (PUT "/survey/:id" {:keys [current-user-id body] {survey-id :id} :params}
     (if current-user-id
       (survey/update current-user-id survey-id body)
+      (resp/forbidden {:message "not authenticated"})))
+  (DELETE "/survey/:id" {:keys [current-user-id] {survey-id :id} :params}
+    (if current-user-id
+      (survey/delete current-user-id survey-id)
       (resp/forbidden {:message "not authenticated"})))
   )
 

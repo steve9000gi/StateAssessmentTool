@@ -5,7 +5,7 @@
     [clojure.java.jdbc :as jdbc]
     [reloaded.repl :refer [system]]
     [ring.util.http-response :as resp]
-    [sat-backend.postgres :refer [insert! update! query]]
+    [sat-backend.postgres :refer [insert! update! delete! query]]
     [sat-backend.user :as user]
     [sat-backend.tsv :refer [to-tsv]]
     [cheshire.core :refer [generate-string parse-string parse-stream]]
@@ -167,3 +167,26 @@
               (resp/bad-request {:message "document did not save"})))
           (resp/bad-request {:message "invalid survey document"}))))))
 
+(defn delete
+  [owner-id id]
+  {:pre [(integer? owner-id)
+         (pos? owner-id)]}
+  (prn 'survey/delete {:owner-id owner-id, :survey-id id})
+  (let [survey-id (try
+                    (Integer/parseInt id)
+                    (catch NumberFormatException e nil))]
+    (if (or (nil? survey-id)
+            (not (pos? survey-id)))
+      (resp/bad-request {:message (str "invalid survey ID: " (pr-str id))})
+      (if (not= owner-id (-> survey-id internal-fetch :owner))
+        (resp/forbidden {:message "survey not owned by authenticated user"})
+        (let [[deleted] (delete! (:db system)
+                                 "sat.surveys"
+                                 ["id = ?" survey-id])]
+          (case deleted
+            1 (resp/ok {:message "survey deleted"})
+            0 (resp/bad-request {:message "survey not deleted; reason unknown"})
+            (resp/bad-request
+             {:message
+              (format "Houston, apparently %d surveys were deleted!"
+                      deleted)})))))))

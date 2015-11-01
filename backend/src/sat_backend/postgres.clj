@@ -117,6 +117,10 @@
   [db table set-map where-clause]
   (jdbc/update! db table set-map where-clause))
 
+(defn delete!
+  [db table where-clause]
+  (jdbc/delete! db table where-clause))
+
 (defn exec!
   ([db query] (exec! db query nil))
   ([db query params]

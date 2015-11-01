@@ -101,6 +101,33 @@ $(document).ready(function() {
       .on('click', logout);
   };
 
+  var getUserIdFromCookieData = function() {
+    if (!document.cookie) { return undefined; }
+    // `document.cookie` is a string like so:
+    // "auth_token=bfb35669-04f7-4f25-8876-c482dd8580bc; user_id=1"
+    var strs = document.cookie.split('; ');
+    for (var i=0; i<strs.length; i++) {
+      var vals = strs[i].split('=');
+      if (vals[0] == 'user_id') {
+        return vals[1];
+      }
+    }
+    return undefined;
+  };
+
+  var deleteSurvey = function(id, surveyListSelector) {
+    d3.xhr(backendBase + '/survey/' + id)
+      .header('Content-Type', 'application/json')
+      .on('beforesend', function(request) { request.withCredentials = true; })
+      .on('error',
+          function() { window.alert('Error talking to backend server.'); })
+      .on('load', function(data) {
+        window.alert('Survey deleted.');
+        d3.select('#survey_' + id).remove();
+      })
+      .send('DELETE');
+  };
+
   var renderSurveyList = function(surveyListSelector, data) {
     // TODO: test this selection pattern:
     d3.select(surveyListSelector).selectAll().remove();
@@ -112,11 +139,13 @@ $(document).ready(function() {
     }
 
     var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
+    var userId = getUserIdFromCookieData();
     var columns =
       ['ID', 'Created At', 'Modified At', 'Download'];
     if (asAdmin) {
       columns.push('Owner Email');
     }
+    columns.push('Delete');
 
     var table = d3.select(surveyListSelector).append('table'),
         thead = table.append('thead'),
@@ -134,7 +163,8 @@ $(document).ready(function() {
       .selectAll('tr')
       .data(data)
       .enter()
-      .append('tr');
+      .append('tr')
+      .attr('id', function(d) { return 'survey_' + d.id; });
 
     rows.append('td')
       .append('a')
@@ -148,11 +178,32 @@ $(document).ready(function() {
       .attr('href', function(d) {
         return backendBase + '/survey/' + d.id + '.csv';
       })
-      .text('download')
+      .text('download');
 
     if (asAdmin) {
       rows.append('td').text(function(d) { return d.owner_email });
     }
+
+    rows.append('td')
+      .append('a')
+      .attr('href', '#')
+      .on('click', function(d) {
+        if (userId == d.owner) {
+          var confirmText = 'Press OK to delete this survey from the server.';
+          if (window.confirm(confirmText)) {
+            deleteSurvey(d.id, surveyListSelector);
+          }
+        } else {
+          alert("You cannot delete a survey that you don't own, even if you're an admin. Sorry about that.");
+        }
+      })
+      .text(function(d) {
+        if (userId == d.owner) {
+          return 'X';
+        } else {
+          return '';
+        }
+      });
 
     d3.selectAll('a.guarded')
       .on('click', function() {
