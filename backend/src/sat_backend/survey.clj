@@ -62,7 +62,7 @@
 
 (defn- list-as-admin-sql
   []
-  [(str "SELECT s.id, s.owner, u.email AS owner_email, "
+  [(str "SELECT s.id, s.name, s.owner, u.email AS owner_email, "
         "       created_at, modified_at"
         "  FROM sat.surveys s"
         "  JOIN sat.users u"
@@ -71,7 +71,7 @@
 
 (defn- list-as-user-sql
   [user-id]
-  [(str "SELECT id, owner, created_at, modified_at"
+  [(str "SELECT id, name, owner, created_at, modified_at"
         "  FROM sat.surveys"
         "  WHERE owner = ?"
         "  ORDER BY modified_at DESC")
@@ -137,6 +137,30 @@
             (resp/content-type
               (resp/ok (-> survey result->response to-tsv))
               "text/csv")))))))
+
+(defn rename
+  [owner-id id body]
+  {:pre [(integer? owner-id)
+         (pos? owner-id)]}
+  (prn 'survey/update {:owner-id owner-id, :survey-id id})
+  (let [survey-id (try
+                    (Integer/parseInt id)
+                    (catch NumberFormatException e nil))]
+    (if (or (nil? survey-id)
+            (not (pos? survey-id)))
+      (resp/bad-request {:message (str "invalid survey ID: " (pr-str id))})
+      (if (not= owner-id (-> survey-id internal-fetch :owner))
+        (resp/forbidden {:message "survey not owned by authenticated user"})
+        (if-let [new-name (get (try-parse-document body) "name")]
+          (let [[updated] (update! (:db system)
+                                   "sat.surveys"
+                                   {:name new-name}
+                                   ["id = ?" survey-id])]
+            (if (= 1 updated)
+              (resp/ok {:name new-name})
+              (resp/bad-request {:message "survey did not save"})))
+          (resp/bad-request
+           {:message "invalid body; specify 'name' as the only property"}))))))
 
 (defn update
   [owner-id id document]

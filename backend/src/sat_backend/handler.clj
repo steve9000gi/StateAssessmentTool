@@ -73,6 +73,11 @@
     (if current-user-id
       (survey/fetch current-user-id survey-id)
       (resp/forbidden {:message "not authenticated"})))
+  (PUT "/survey/:id/rename"
+      {:keys [current-user-id body] {survey-id :id} :params}
+    (if current-user-id
+      (survey/rename current-user-id survey-id body)
+      (resp/forbidden {:message "not authenticated"})))
   (PUT "/survey/:id" {:keys [current-user-id body] {survey-id :id} :params}
     (if current-user-id
       (survey/update current-user-id survey-id body)

@@ -101,6 +101,33 @@ $(document).ready(function() {
       .on('click', logout);
   };
 
+  var defaultName = function(surveyId) {
+    return 'survey #' + surveyId;
+  };
+
+  var renameSurvey = function(id, surveyListSelector, newName) {
+    d3.xhr(backendBase + '/survey/' + id + '/rename')
+      .header('Content-Type', 'application/json')
+      .on('beforesend', function(request) { request.withCredentials = true; })
+      .on('error', function(req) {
+        var resp = req.response && JSON.parse(req.response);
+        if (resp
+            && resp.message == 'survey not owned by authenticated user') {
+          alert("Can't save: you have read-only access to this survey.");
+        } else {
+          console.error('Failed to save survey. Request was:', req);
+          alert('Failed to save survey #' + id);
+        }
+      })
+      .on('load', function(data) {
+        d3.select('#survey_' + id)
+          .select('td.name a')
+          .text(newName);
+        window.alert('Survey renamed.');
+      })
+      .send('PUT', JSON.stringify({name: newName}));
+  };
+
   var getUserIdFromCookieData = function() {
     if (!document.cookie) { return undefined; }
     // `document.cookie` is a string like so:
@@ -141,10 +168,11 @@ $(document).ready(function() {
     var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
     var userId = getUserIdFromCookieData();
     var columns =
-      ['ID', 'Created At', 'Modified At', 'Download'];
+      ['ID', 'Name', 'Created At', 'Modified At', 'Download'];
     if (asAdmin) {
       columns.push('Owner Email');
     }
+    columns.push('Rename');
     columns.push('Delete');
 
     var table = d3.select(surveyListSelector).append('table'),
@@ -169,10 +197,16 @@ $(document).ready(function() {
     rows.append('td')
       .append('a')
       .attr('class', 'guarded')
-      .attr('href', function(d) { return 'survey.html?id=' + d.id})
-      .text(function(d) { return d.id });
-    rows.append('td').text(function(d) { return d.created_at });
-    rows.append('td').text(function(d) { return d.modified_at });
+      .attr('href', function(d) { return 'survey.html?id=' + d.id; })
+      .text(function(d) { return d.id; });
+    rows.append('td')
+      .attr('class', 'name')
+      .append('a')
+      .attr('class', 'guarded')
+      .attr('href', function(d) { return 'survey.html?id=' + d.id; })
+      .text(function(d) { return d.name; });
+    rows.append('td').text(function(d) { return d.created_at; });
+    rows.append('td').text(function(d) { return d.modified_at; });
     rows.append('td')
       .append('a')
       .attr('href', function(d) {
@@ -183,6 +217,29 @@ $(document).ready(function() {
     if (asAdmin) {
       rows.append('td').text(function(d) { return d.owner_email });
     }
+
+    rows.append('td')
+      .append('a')
+      .attr('href', '#')
+      .on('click', function(d) {
+        if (userId == d.owner) {
+          var promptText = 'Please enter the name for survey #' + d.id;
+          var defaultText = d.name || defaultName(d.id);
+          var newName = prompt(promptText, defaultText);
+          if (newName != null) {
+            renameSurvey(d.id, surveyListSelector, newName);
+          }
+        } else {
+          alert("You cannot rename a survey that you don't own, even if you're an admin. Sorry about that.");
+        }
+      })
+      .text(function(d) {
+        if (userId == d.owner) {
+          return 'rename';
+        } else {
+          return '';
+        }
+      });
 
     rows.append('td')
       .append('a')
@@ -215,7 +272,7 @@ $(document).ready(function() {
       })
   };
 
-  var setupMapList = function(surveyListSelector) {
+  var setupSurveyList = function(surveyListSelector) {
     var message = d3.select(surveyListSelector)
       .append('div')
       .attr('class', 'loading-message')
@@ -259,7 +316,7 @@ $(document).ready(function() {
   function(logoutLinkSelector, surveyListSelector, createButtonSelector) {
     requireAuthentication(function() {
       setupLogoutLink(logoutLinkSelector);
-      setupMapList(surveyListSelector);
+      setupSurveyList(surveyListSelector);
       setupCreateButton(createButtonSelector);
     });
   };

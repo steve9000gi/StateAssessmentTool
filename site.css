@@ -151,3 +151,6 @@ td {
   border: solid #eeeeee 1px;
 }
 
+td.name {
+  text-align: left;
+}
