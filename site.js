@@ -98,7 +98,10 @@ $(document).ready(function() {
 
   window.setupLogoutLink = function(logoutLinkSelector) {
     d3.select(logoutLinkSelector)
-      .on('click', logout);
+      .on('click', function() {
+        d3.event.preventDefault();
+        logout();
+      });
   };
 
   var defaultName = function(surveyId) {
