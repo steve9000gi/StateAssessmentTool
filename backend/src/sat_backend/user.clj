@@ -118,32 +118,33 @@
         (resp/internal-server-error {:message (.getMessage e)})))))
 
 (defn create
-  [email password]
+  [current-user-id email password]
   (prn 'user/create email)
-  (if-not (valid-email? email)
-    (resp/bad-request {:message "invalid email"})
-    (if-not (valid-password? password)
-      (resp/bad-request {:message "invalid password"})
-      (try
-        (let [new-user (first
-                         (insert!
-                           (:db system)
-                           "sat.users"
-                           {:email email
-                            :password (creds/hash-bcrypt
-                                       password
-                                       :work-factor password-work-factor)}))]
-          (if new-user
-            (add-session new-user
-                         (resp/ok (select-keys new-user [:id :email])))
-            (resp/bad-request {:message "unknown error"
-                               :data new-user})))
-        (catch PSQLException e
-          (check-conflict e))
-        (catch Exception e
-          (println "Exception" e)
-          (.printStackTrace e)
-          (resp/internal-server-error {:message (.getMessage e)}))))))
+  (if-not (is-admin? current-user-id)
+    (resp/forbidden {:message "not authorized"})
+    (if-not (valid-email? email)
+      (resp/bad-request {:message "invalid email"})
+      (if-not (valid-password? password)
+        (resp/bad-request {:message "invalid password"})
+        (try
+          (let [new-user (first
+                           (insert!
+                             (:db system)
+                             "sat.users"
+                             {:email email
+                              :password (creds/hash-bcrypt
+                                          password
+                                          :work-factor password-work-factor)}))]
+            (if new-user
+              (resp/ok (select-keys new-user [:id :email]))
+              (resp/bad-request {:message "unknown error"
+                                 :data new-user})))
+          (catch PSQLException e
+            (check-conflict e))
+          (catch Exception e
+            (println "Exception" e)
+            (.printStackTrace e)
+            (resp/internal-server-error {:message (.getMessage e)})))))))
 
 (defn login
   [email password]

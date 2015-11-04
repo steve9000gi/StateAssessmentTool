@@ -158,15 +158,17 @@ $(document).ready(function() {
   var renderSurveyList = function(surveyListSelector, data) {
     // TODO: test this selection pattern:
     d3.select(surveyListSelector).selectAll().remove();
-    if (!data || data.length === 0) {
-      d3.select(surveyListSelector).append('p')
-        .text("You're logged in, but you don't have any surveys yet. " +
-              "To get started, create a survey using the button below.");
-      return;
-    }
-
     var asAdmin = data && data[0] && data[0].hasOwnProperty('owner_email');
     var userId = getUserIdFromCookieData();
+
+    if (asAdmin) {
+      d3.select(surveyListSelector)
+        .append('p')
+        .append('a')
+        .attr('href', 'register.html')
+        .text('Register a new user');
+    }
+
     var columns =
       ['ID', 'Name', 'Created At', 'Modified At', 'Download'];
     if (asAdmin) {
@@ -174,6 +176,13 @@ $(document).ready(function() {
     }
     columns.push('Rename');
     columns.push('Delete');
+
+    if (!data || data.length === 0) {
+      d3.select(surveyListSelector).append('p')
+        .text("You're logged in, but you don't have any surveys yet. " +
+              "To get started, create a survey using the button below.");
+      return;
+    }
 
     var table = d3.select(surveyListSelector).append('table'),
         thead = table.append('thead'),
@@ -306,6 +315,41 @@ $(document).ready(function() {
           })
           .send('POST', JSON.stringify({}));
       });
+  };
+
+  var hookRegistrationAction = function(registerSelector) {
+    var content = d3.select(registerSelector),
+        emailInput = content.select('input[name=email]'),
+        passwordInput = content.select('input[name=password]'),
+        submitButton = content.select('input[type=submit]');
+    submitButton.on('click', function() {
+      d3.event.preventDefault();
+      var confirmText = 'Are you sure you want to create a new user? ' +
+            '(This action cannot be undone.) ' +
+            'Note that you must remember the password, ' +
+            'because you must email it to them afterwards.';
+      if (window.confirm(confirmText)) {
+        var requestObject = {email: emailInput.property('value'),
+                             password: passwordInput.property('value')};
+        d3.xhr(backendBase + '/register')
+          .header('Content-Type', 'application/json')
+          .on('beforesend', function(request) {request.withCredentials = true;})
+          .on('error', function(req) {
+            console.error('Failed to create new user. Request was:', req);
+            alert('Failed to create new user.');
+          })
+          .on('load', function(request) {
+            alert('Created new user. You must email them to inform them of their password.');
+            window.location = 'home.html';
+          })
+          .send('POST', JSON.stringify(requestObject));}
+    });
+  };
+
+  window.setupRegistrationPage = function(registerSelector) {
+    requireAuthentication(function() {
+      hookRegistrationAction(registerSelector);
+    });
   };
 
   window.setupIndexPage = function(loginSelector) {

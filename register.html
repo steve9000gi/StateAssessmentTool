@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>State Assessment Tool</title>
+  <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" Type="text/css" href="site.css">
+</head>
+
+<body>
+  <div id="main-page">
+    <img src="NMCHWDC-gray.png" alt="NMCHWDC logo">
+    <br/><br/>
+    <header>
+      <h1>State Title V Roles in Health Reforms including the Affordable Care Act:
+      <br/>A Title V State Access to Care Assessment Tool</h1>
+    </header>
+
+    <main id="main">
+      <h2>Register a new user</h2>
+      <p>
+        Note that you should remember the password you pick, because after you
+        register a user, you will need to contact them and give them the
+        password.
+      </p>
+      <div id="register">
+        <form>
+          <label>Email address: <input type="email" name="email" placeholder="user@example.com" /></label><br/>
+          <label>Password: <input type="password" name="password" /></label><br/>
+          <input type="submit">
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="site.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      setupRegistrationPage('#register');
+    });
+  </script>
+</body>
+</html>
+
