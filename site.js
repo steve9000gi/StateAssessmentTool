@@ -242,7 +242,7 @@ $(document).ready(function() {
             renameSurvey(d.id, surveyListSelector, newName);
           }
         } else {
-          alert("You cannot rename a survey that you don't own, even if you're an admin. Sorry about that.");
+          alert("You can't rename a survey that you don't own, even if you're an admin. Sorry about that.");
         }
       })
       .text(function(d) {
