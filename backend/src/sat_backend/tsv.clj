@@ -8,7 +8,7 @@
 
 (defn- survey-metadata
   [{:keys [id owner created_at modified_at] :as survey}]
-  [["Survey Version" "2015.1"] ;; for forwards compatibility
+  [["Survey Version" "2016.1"] ;; for forwards compatibility
    ["Survey ID" (str id)]
    ["Owner Email" (get-email owner)]
    ["Created At" (str created_at)]
