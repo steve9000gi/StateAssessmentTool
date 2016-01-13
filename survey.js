@@ -81,8 +81,8 @@ $(document).ready(function() {
   $("#s2q5div input[type=radio]").on("change", function(e) {
     var textSelector = "#" + this.parentElement.parentElement.id
       + " input[type=text]";
-    $(textSelector).attr("disabled", this.value !== "5");
-    if (this.value !== "5") {
+    $(textSelector).attr("disabled", this.value !== "1");
+    if (this.value !== "1") {
       $(textSelector)[0].value = ""; 
     }
   });
