@@ -63,20 +63,20 @@ html, body {
 
 #main-page {
   min-height: 100%;
-  margin-bottom: -27px; /* equal to -footer height */
+  margin-bottom: -31px; /* equal to -footer height */
 }
 
 footer {
   background: #eeeeee;
   position: fixed;
-  height: 27px;
+  height: 31px;
   left: 0;
   right: 0;
   bottom: 0;
 }
 
 #footer-div {
-  height: 27px;
+  height: 31px;
   border-style: groove;
   vertical-align: middle;
   text-align: justify;
@@ -86,7 +86,7 @@ footer {
 
 #footer-div div {
   width: 130px;
-  height: 27px;
+  height: 31px;
   vertical-align: top;
   text-align: center;
   display: inline-block;
@@ -105,14 +105,18 @@ footer {
 }
 
 #footer-div button {
-  font-size: 14px;
+  font-size: 18px;
   background: #aaffaa;
-  line-height: 14px;
+  line-height: 18px;
 }
 
 #navigation-box {
-  width: 275px !important;
-  font-size: 14px;
+  width: 375px !important;
+  font-size: 18px;
+}
+
+#single-page, #logout-link {
+  font-size: 18px;
 }
 
 .grayed-out {
