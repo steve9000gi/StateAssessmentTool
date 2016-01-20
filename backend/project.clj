@@ -1,4 +1,4 @@
-(defproject sat-backend "0.5.0"
+(defproject sat-backend "0.6.0"
   :description "Backend persistence layer for State Assessment Tool"
   :url "http://syssci.renci.org/SAT/"
   :dependencies [[org.clojure/clojure "1.7.0"]
