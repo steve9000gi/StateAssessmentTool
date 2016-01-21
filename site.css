@@ -158,3 +158,19 @@ td {
 td.name {
   text-align: left;
 }
+
+#important-note {
+  font-weight: bold;
+  color: #ff8800;
+}
+
+.good-span {
+  font-weight: bold;
+  color: #00aa00;
+}
+
+.bad-span {
+  font-weight: bold;
+  color: #ee0000;
+}
+}
