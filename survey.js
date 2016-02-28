@@ -191,7 +191,7 @@ $(document).ready(function() {
 
   $("#next").click(function() {
     var current = $(getVisibleSection())[0].id;
-    if (current !== "section5") {
+    if (current !== "section6") {
       var next = (current === "contents")
                ? "#overview"
                : ((current === "overview") ? "#section0"
