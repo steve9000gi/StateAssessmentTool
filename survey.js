@@ -202,29 +202,9 @@ $(document).ready(function() {
 	console.error("$(\"#prev\").click(): unknown case");
         break;
     };
-    /*
-    if (current !== "contents") {
-      var next = (current === "overview")
-               ? "#contents"
-               : ((current === "section0") ? "#overview"
-                                           : "#section" + (+current[7] - 1));
-      showSelectedSection(next);
-      var selectedTitle;
-      switch (current) {
-	case "overview":
-	  selectedTitle = "contents";
-	  break;
-	case "section0":
-	  selectedTitle = "overview";
-	  break;
-	default:
-	  selectedTitle = "section" + (+current[7] - 1);
-      };
-      */
-      showSelectedSection("#" + prev);
-      var selectedA = "#navigation-box a[title='" + prev + "']";
-      $(selectedA).addClass("selected");
-    //}
+    showSelectedSection("#" + prev);
+    var selectedA = "#navigation-box a[title='" + prev + "']";
+    $(selectedA).addClass("selected");
   });
 
   $("#next").click(function() {
@@ -265,30 +245,8 @@ $(document).ready(function() {
         break;
     };
     showSelectedSection("#" + next);
-
-    /*
-    if (current !== "section6") {
-      var next = (current === "contents")
-               ? "#overview"
-               : ((current === "overview") ? "#section0"
-                                           : "#section" + (+current[7] + 1));
-      showSelectedSection(next);
-      var selectedTitle;
-      switch (current) {
-	case "contents":
-	  selectedTitle = "overview";
-	  break;
-	case "overview":
-	  selectedTitle = "section0";
-	  break;
-	default:
-	  selectedTitle = "section" + (+current[7] + 1);
-      };
-      var selectedA = "#navigation-box a[title='" + selectedTitle + "']";
-      */
-      var selectedA = "#navigation-box a[title='" + next + "']";
-      $(selectedA).addClass("selected");
-  //  }
+    var selectedA = "#navigation-box a[title='" + next + "']";
+    $(selectedA).addClass("selected");
   });
 
   $("#contents a, #navigation-box a[class!='relative-link']").click(function() {
@@ -304,7 +262,6 @@ $(document).ready(function() {
   });
 
   $("#instructions-button").click(function() {
-    //window.open("instructions.html","_blank");
     showSelectedSection("#instructions");
     $("#navigation-box a[title='instructions']").addClass("selected");
   });
