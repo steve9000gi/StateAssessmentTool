@@ -167,6 +167,42 @@ $(document).ready(function() {
 
   $("#prev").click(function() {
     var current = $(getVisibleSection())[0].id;
+    var prev;
+    switch (current) {
+      case "contents":
+	return;
+      case "overview":
+	prev = "contents";
+	break;
+      case "instructions":
+	prev = "overview";
+	break;
+      case "section0":
+	prev = "instructions";
+	break;
+      case "section1":
+        prev = "section0";
+        break;
+      case "section2":
+        prev = "section1";
+        break;
+      case "section3":
+        prev = "section2";
+        break;
+      case "section4":
+        prev = "section3";
+        break;
+      case "section5":
+        prev = "section4";
+        break;
+      case "downloadInstructions":
+        prev = "section5";
+        break;
+      default:
+	console.error("$(\"#prev\").click(): unknown case");
+        break;
+    };
+    /*
     if (current !== "contents") {
       var next = (current === "overview")
                ? "#contents"
@@ -184,13 +220,53 @@ $(document).ready(function() {
 	default:
 	  selectedTitle = "section" + (+current[7] - 1);
       };
-      var selectedA = "#navigation-box a[title='" + selectedTitle + "']";
+      */
+      showSelectedSection("#" + prev);
+      var selectedA = "#navigation-box a[title='" + prev + "']";
       $(selectedA).addClass("selected");
-    }
+    //}
   });
 
   $("#next").click(function() {
     var current = $(getVisibleSection())[0].id;
+    var next;
+    switch (current) {
+      case "contents":
+	next = "overview";
+	break;
+      case "overview":
+	next = "instructions";
+	break;
+      case "instructions":
+	next = "section0";
+	break;
+      case "section0":
+	next = "section1";
+	break;
+      case "section1":
+        next = "section2";
+        break;
+      case "section2":
+        next = "section3";
+        break;
+      case "section3":
+        next = "section4";
+        break;
+      case "section4":
+        next = "section5";
+        break;
+      case "section5":
+        next = "downloadInstructions";
+        break;
+      case "downloadInstructions":
+        return;
+      default:
+	console.error("$(\"#next\").click(): unknown case");
+        break;
+    };
+    showSelectedSection("#" + next);
+
+    /*
     if (current !== "section6") {
       var next = (current === "contents")
                ? "#overview"
@@ -209,8 +285,10 @@ $(document).ready(function() {
 	  selectedTitle = "section" + (+current[7] + 1);
       };
       var selectedA = "#navigation-box a[title='" + selectedTitle + "']";
+      */
+      var selectedA = "#navigation-box a[title='" + next + "']";
       $(selectedA).addClass("selected");
-    }
+  //  }
   });
 
   $("#contents a, #navigation-box a[class!='relative-link']").click(function() {
@@ -226,7 +304,9 @@ $(document).ready(function() {
   });
 
   $("#instructions-button").click(function() {
-    window.open("instructions.html","_blank");
+    //window.open("instructions.html","_blank");
+    showSelectedSection("#instructions");
+    $("#navigation-box a[title='instructions']").addClass("selected");
   });
 
   // Warning: modifies its argument.

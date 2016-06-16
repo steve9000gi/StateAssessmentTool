@@ -85,7 +85,7 @@ footer {
 }
 
 #footer-div div {
-  width: 130px;
+  width: 90px;
   height: 31px;
   vertical-align: top;
   text-align: center;
@@ -94,7 +94,7 @@ footer {
 }
 
 #footer-div a {
-  vertical-align: -2px;
+  vertical-align: -4px;
 }
 
 .stretch {
@@ -105,18 +105,19 @@ footer {
 }
 
 #footer-div button {
-  font-size: 18px;
+  font-size: 14px;
   background: #aaffaa;
-  line-height: 18px;
+  line-height: 14px;
+  vertical-align: -4px;
 }
 
 #navigation-box {
-  width: 375px !important;
-  font-size: 18px;
+  width: 622px !important;
+  font-size: 14px;
 }
 
 #single-page, #logout-link {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .grayed-out {
