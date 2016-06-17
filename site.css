@@ -147,7 +147,7 @@ footer {
   cursor: hand;
 }
 
-.selected {
+.selected, .red {
   color: #ff0000 !important;
 }
 
